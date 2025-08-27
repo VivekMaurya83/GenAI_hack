@@ -1,0 +1,10 @@
+# For PDF text extraction
+PyMuPDF==1.24.1
+
+# For interacting with the Gemini API
+google-generativeai==0.7.1
+
+# For managing environment variables (like API keys)
+python-dotenv==1.0.1
+
+python-docx

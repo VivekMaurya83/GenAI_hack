@@ -1,0 +1,100 @@
+CREATE DATABASE resume_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+use resume_db;
+
+-- Main table to hold the core resume information
+CREATE TABLE resumes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(255),
+    name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(50),
+    linkedin VARCHAR(255),
+    github VARCHAR(255),
+    summary TEXT,
+    optimized_summary TEXT, -- Column to store the optimized version
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table for work experience entries, linked to a resume
+CREATE TABLE work_experiences (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    role VARCHAR(255),
+    company VARCHAR(255),
+    duration VARCHAR(100),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+-- Table for education entries
+CREATE TABLE education (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    institution VARCHAR(255),
+    degree VARCHAR(255),
+    duration VARCHAR(100),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+-- Table for project entries
+CREATE TABLE projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    title VARCHAR(255),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+-- Table for internship entries (similar to work experience)
+CREATE TABLE internships (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    role VARCHAR(255),
+    company VARCHAR(255),
+    duration VARCHAR(100),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+-- Table for skill entries
+CREATE TABLE skills (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    category VARCHAR(255),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+-- Table for certification entries
+CREATE TABLE certifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    name VARCHAR(255),
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE additional_sections (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT NOT NULL,
+    section_name VARCHAR(255) NOT NULL, -- This stores the original section title, e.g., "Achievements"
+    description TEXT,
+    optimized_description TEXT,
+    FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE CASCADE
+);
+
+
+select * from resumes;
+select * from skills;
+select * from projects;
+select * from certifications;
+select * from work_experiences;
+select * from additional_sections;
