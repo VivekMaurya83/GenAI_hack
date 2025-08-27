@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Strategist</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Career Strategist</h1>
+            <p>Your intelligent partner for professional growth.</p>
+        </header>
+        <main>
+            <div class="input-section">
+                <div class="input-grid">
+                    <fieldset>
+                        <legend>Step 1: Your Starting Point</legend>
+                        <div class="input-choice">
+                            <label><input type="radio" name="skill-source" value="resume" checked> Upload Resume</label>
+                            <label><input type="radio" name="skill-source" value="manual"> Enter Skills Manually</label>
+                        </div>
+                        <div id="resume-input-container" class="input-group">
+                            <label>Upload Resume (PDF/DOCX) to auto-extract</label>
+                            <input type="file" id="resume-upload" accept=".pdf,.docx">
+                        </div>
+                        <div id="manual-skills-container" class="input-group hidden">
+                            <label>Enter Your Current Skills & Projects</label>
+                            <textarea id="manual-skills-input" rows="5" placeholder="Skills: Python, SQL, React...\nProjects: Built a portfolio website..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="current-level">Your Current Proficiency</label>
+                            <select id="current-level">
+                                <option value="Novice">Novice</option>
+                                <option value="Proficient" selected>Proficient</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Step 2: Your Destination</legend>
+                        <div class="input-group">
+                            <label for="goal-input">Paste Job Description OR Describe Desired Skills</label>
+                            <textarea id="goal-input" rows="8" placeholder="e.g., Senior Frontend Developer at Google... OR I want to become an expert in backend development with Python and AWS..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="goal-level">Desired Proficiency</label>
+                            <select id="goal-level">
+                                <option value="Proficient">Proficient</option>
+                                <option value="Job-Ready" selected>Job-Ready</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+                <fieldset>
+                    <legend>Step 3: Your Timeline</legend>
+                    <div class="grid-inputs-small">
+                        <div class="input-group">
+                            <label for="duration">Timeframe</label>
+                            <select id="duration">
+                                <option value="3 months">3 Months</option>
+                                <option value="6 months" selected>6 Months</option>
+                                <option value="1 year">1 Year</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="study-hours">Study Hours / Month</label>
+                            <input type="number" id="study-hours" value="25" min="5">
+                        </div>
+                    </div>
+                </fieldset>
+                <button id="generate-btn">Generate My Strategic Plan</button>
+            </div>
+
+            <div id="loading-spinner" class="hidden"><div class="spinner"></div><p>Your AI strategist is building your plan...</p></div>
+
+            <div id="results-section" class="hidden">
+                <div id="results-header">
+                    <h2>Your Strategic Action Plan</h2>
+                    <button id="download-btn" class="download-button">
+                        <img src="download-icon.svg" alt="Download"/>
+                        Download Plan as PDF
+                    </button>
+                </div>
+                <div class="results-grid">
+                    <div class="result-card" id="score-card">
+                        <h3>Job Match Score</h3>
+                        <div class="score-container">
+                            <div class="score-circle">
+                                <span id="score-value">0%</span>
+                            </div>
+                            <p id="score-summary"></p>
+                        </div>
+                    </div>
+                    <div class="result-card" id="summary-card">
+                        <h3>Priority Skills to Learn</h3>
+                        <ul id="summary-list"></ul>
+                    </div>
+                </div>
+                <div class="result-card" id="timeline-card">
+                    <h3>High-Level Timeline</h3>
+                    <div class="chart-container">
+                        <canvas id="timeline-chart"></canvas>
+                    </div>
+                </div>
+                <div class="result-card" id="roadmap-card">
+                    <h3>Interactive Roadmap</h3>
+                    <div id="detailed-roadmap-container"></div>
+                </div>
+                <div class="result-card" id="projects-card">
+                    <h3>Hands-On Projects</h3>
+                    <div id="projects-container"></div>
+                </div>
+                <div class="result-card" id="courses-card">
+                    <h3>Recommended Courses</h3>
+                    <div id="courses-container"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="tutor-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-topic-title"></h2>
+            <div id="tutor-loading-state" class="loading-state">
+                <div class="spinner"></div>
+                <p>Thinking like a tutor... 🧠</p>
+            </div>
+            <div id="tutor-error-state" class="error-message hidden">
+                <p>An error occurred. Please try again.</p>
+            </div>
+            <div id="tutor-response-content" class="hidden">
+                <div class="explanation-section">
+                    <h4>Analogy</h4>
+                    <p id="analogy-text"></p>
+                </div>
+                <div class="explanation-section">
+                    <h4>Technical Definition</h4>
+                    <div id="technical-definition-text"></div>
+                </div>
+                <div class="explanation-section">
+                    <h4>Prerequisites</h4>
+                    <ul id="prerequisites-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button id="chatbot-button" class="floating-button hidden">
+        <i class="fas fa-robot"></i>
+        <span class="button-text">Chat with AI</span>
+    </button>
+    
+    <div id="chatbot-window" class="chatbot-window hidden">
+        <div class="chatbot-header">
+            <h4>AI Career Assistant</h4>
+            <button id="close-chatbot-btn" class="close-button">&times;</button>
+        </div>
+        <div class="chatbot-body">
+            <div id="chat-messages" class="chat-messages">
+                </div>
+            <div id="chatbot-typing-indicator" class="typing-indicator hidden">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chat-input" placeholder="Ask a question about your plan...">
+            <button id="send-btn" class="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
