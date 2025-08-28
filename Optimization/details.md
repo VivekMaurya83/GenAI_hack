@@ -3,9 +3,9 @@
 
 ## How It Works
 
-First, a user uploads their resume. The backend extracts the raw text and performs a two-pass AI analysis: one pass to understand the document's structure (experience, projects, etc.) and a second, specialized pass to find and categorize every skill mentioned anywhere in the text.
+The application operates through an intelligent, multi-stage workflow. First, a user uploads their resume. The backend extracts the raw text and performs a two-pass AI analysis: one pass to understand the document's structure (experience, projects, etc.) and a second, specialized pass to find and categorize every skill mentioned anywhere in the text.
 
-This complete, structured data is then saved to a relational MySQL database. The user can then choose a tool, such as the Resume or LinkedIn Optimizer. The application fetches the original data from the database and sends it to the AI again with a powerful prompt to generate enhanced, impactful content. This optimized text is saved back to the database, and the final, improved version is used to generate a downloadable `.docx` file or display the content on the UI.
+This complete, structured data is then saved to a **Firebase Firestore** database using a relational-style model with collections and sub-collections. The user can then choose a tool, such as the Resume or LinkedIn Optimizer. The application fetches the original data from the database and sends it to the AI again with a powerful prompt to generate enhanced, impactful content. This optimized text is saved back to the database, and the final, improved version is used to generate a downloadable `.docx` file or display the content on the UI.
 
 ---
 
@@ -16,53 +16,57 @@ Follow these steps to get the application running on your local machine.
 ### 1. Prerequisites
 
 -   Python 3.8+
--   A mysql workbench.
+-   A Google Firebase Project.
 -   An API Key from Google AI Studio for the Gemini API.
 
 ### 2. Backend Setup
 
 1.  **Navigate to the Backend Directory:**
     ```bash
-    cd backend
+    cd optimization/backend
     ```
 
 2.  **Create the Environment File (`.env`):**
-    Create a file named `.env` inside the `backend` folder and add your credentials.
+    Create a file named `.env` inside the `backend` folder and add your Google API key.
 
     ```env
     # Your secret key from Google AI Studio
     GOOGLE_API_KEY="your_google_api_key_here"
-
-    # Your local database connection details
-    DB_HOST="localhost"
-    DB_USER="root"
-    DB_PASSWORD="your_mysql_password"  # Often blank or 'root' on a default local setup
-    DB_NAME="resume_db"
     ```
 
-3.  **Install Python Dependencies:**
-    From the `base` directory, run the following command to install all required libraries from the `requirements.txt` file:
+3.  **Add Firebase Credentials:**
+    -   Go to your Firebase project settings in the Firebase Console.
+    -   Navigate to "Service accounts".
+    -   Click "Generate new private key" and download the resulting JSON file.
+    -   **CRITICAL:** Rename this file to `firebase-credentials.json` and place it inside the `backend` folder.
+
+4.  **Install Python Dependencies:**
+    From the `optimization` directory, run the following command to install all required libraries from the `requirements.txt` file:
     ```bash
     pip install -r requirements.txt
     ```
 
-### 3. Database Setup
+### 3. Database Setup (in Firebase Console)
 
-1.  **Create the Database:**
-    Using a MySQL tool likeMySQL Workbench, execute the following SQL command:
-    ```sql
-    CREATE DATABASE resume_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    ```
+1.  **Create a Firebase Project:**
+    -   Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
 
-2.  **Create the Tables:**
-    Select the `resume_db` database and then execute the SQL script found in `db.txt` to create all the necessary tables.
+2.  **Create a Firestore Database:**
+    -   In your project, go to "Build" > "Firestore Database" and click "Create database".
+    -   When prompted, select **"Start in test mode"**. This will allow your local server to read and write data during development.
+    -   Choose a location for your database.
+    -   **No further setup is needed.** The Python script will automatically create the necessary collections and documents the first time it runs.
+
+---
 
 ## Running the Application
+
+### Start the Backend Server
 
 -   Open a terminal window.
 -   Navigate to the **`backend`** folder.
     ```bash
-    cd backend
+    cd optimization/backend
     ```
 -   Run the FastAPI server:
     ```bash
