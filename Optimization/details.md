@@ -70,6 +70,6 @@ Follow these steps to get the application running on your local machine.
     ```
 -   Run the FastAPI server:
     ```bash
-    python main.py
+    uvicorn main:app --reload
     ```
 -   The server will start at `http://127.0.0.1:8000`. Leave this terminal running.
