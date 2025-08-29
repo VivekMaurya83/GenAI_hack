@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE_URL = "";
+  // --- CRITICAL: Define the exact location of your backend API ---
+  const API_BASE_URL = "http://127.0.0.1:8000";
 
   const fileInput = document.getElementById("resume_file");
   const uploadForm = document.getElementById("upload-form");
@@ -113,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw await response.json();
       }
       const data = await response.json();
+      // The download URL is now a full URL
       window.location.href = `${API_BASE_URL}${data.download_url}`;
     } catch (error) {
       showError(error.detail || "Resume optimization failed.");
@@ -153,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Helper functions (unchanged)
   function displayLinkedInContent(data) {
     let html = "";
     if (data.headlines) {
