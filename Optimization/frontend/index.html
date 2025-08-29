@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,53 +7,47 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="container">
-        <h1>📄 AI Professional Presence Toolkit</h1>
-        <div id="upload-section" class="card">
-            <p>Upload your resume (PDF or DOCX) to begin the analysis and optimization process.</p>
-            <form id="upload-form">
-                <input type="file" id="resume_file" name="resume_file" accept=".pdf,.docx" required>
-                <button type="submit">Analyze Resume</button>
-            </form>
-        </div>
-        <div id="loading" class="hidden">
-            <div class="spinner"></div>
-            <p>Analyzing...</p>
-        </div>
-        <div id="choice-section" class="hidden card">
-            <h2>Analysis Complete</h2>
-            <p>Your resume has been processed. What would you like to do next?</p>
-            <div class="button-group">
-                <button id="show-resume-optimizer" class="choice-btn">Optimize Resume</button>
-                <button id="show-linkedin-optimizer" class="choice-btn">Optimize LinkedIn Profile</button>
-            </div>
-            <a href="#" id="start-over-link" class="back-link">Upload a Different Resume</a>
-        </div>
-        <div id="resume-optimizer-section" class="hidden card">
-            <h2>Resume Optimizer</h2>
-            <p>Provide an instruction, or leave it blank for a general enhancement.</p>
-            <form id="optimize-form-resume">
-                <input type="text" id="resume_user_request" placeholder="e.g., 'projects: make bullets more impactful'">
-                <button type="submit">Optimize & Download DOCX</button>
-            </form>
-            <a href="#" class="back-link">‹ Back to Choices</a>
-        </div>
-        <div id="linkedin-optimizer-section" class="hidden card">
-            <h2>LinkedIn Optimizer</h2>
-            <p>Provide an instruction, or leave it blank for a full profile optimization.</p>
-            <form id="optimize-form-linkedin">
-                <input type="text" id="linkedin_user_request"
-                    placeholder="e.g., 'headline' or 'about: make it more engaging'">
-                <button type="submit">Generate LinkedIn Content</button>
-            </form>
-            <div id="linkedin-content" class="results-container"></div>
-            <a href="#" class="back-link">‹ Back to Choices</a>
-        </div>
-        <div id="error-message" class="error hidden"></div>
+<div class="container">
+    <h1>📄 AI Professional Presence Toolkit</h1>
+    <div id="upload-section" class="card">
+        <p>Upload your resume (PDF or DOCX) to begin the analysis and optimization process.</p>
+        <form id="upload-form">
+            <input type="file" id="resume_file" name="resume_file" accept=".pdf,.docx" required>
+            <button type="submit">Analyze Resume</button>
+        </form>
     </div>
-    <script src="script.js"></script>
+    <div id="loading" class="hidden"><div class="spinner"></div><p>Analyzing...</p></div>
+    <div id="choice-section" class="hidden card">
+        <h2>Analysis Complete</h2>
+        <p>Your resume has been processed. What would you like to do next?</p>
+        <div class="button-group">
+            <button id="show-resume-optimizer" class="choice-btn">Optimize Resume</button>
+            <button id="show-linkedin-optimizer" class="choice-btn">Optimize LinkedIn Profile</button>
+        </div>
+        <a href="#" id="start-over-link" class="back-link">Upload a Different Resume</a>
+    </div>
+    <div id="resume-optimizer-section" class="hidden card">
+        <h2>Resume Optimizer</h2>
+        <p>Provide an instruction, or leave it blank for a general enhancement.</p>
+        <form id="optimize-form-resume">
+            <input type="text" id="resume_user_request" placeholder="e.g., 'projects: make bullets more impactful'">
+            <button type="submit">Optimize & Download DOCX</button>
+        </form>
+        <a href="#" class="back-link">‹ Back to Choices</a>
+    </div>
+    <div id="linkedin-optimizer-section" class="hidden card">
+        <h2>LinkedIn Optimizer</h2>
+        <p>Provide an instruction, or leave it blank for a full profile optimization.</p>
+        <form id="optimize-form-linkedin">
+            <input type="text" id="linkedin_user_request" placeholder="e.g., 'headline' or 'about: make it more engaging'">
+            <button type="submit">Generate LinkedIn Content</button>
+        </form>
+        <div id="linkedin-content" class="results-container"></div>
+        <a href="#" class="back-link">‹ Back to Choices</a>
+    </div>
+    <div id="error-message" class="error hidden"></div>
+</div>
+<script src="script.js"></script>
 </body>
-
 </html>
