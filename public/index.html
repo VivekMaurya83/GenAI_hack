@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Path Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .submit-button {
+            background: linear-gradient(to right, #f97316, #ef4444); /* orange-500 to red-500 */
+            transition: all 0.3s ease;
+        }
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2), 0 4px 6px -4px rgba(239, 68, 68, 0.2);
+        }
+        .course-card {
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        /* Modal and Quiz Styles */
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.7); }
+        .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; transform: scale(0.95); opacity: 0; }
+        .modal-open .modal-content { transform: scale(1); opacity: 1; }
+        .quiz-option { transition: all 0.2s ease-in-out; }
+        .quiz-option.selected { background-color: #f97316; color: white; border-color: #f97316; }
+        .quiz-option.correct { background-color: #10b981; color: white; border-color: #10b981; }
+        .quiz-option.incorrect { background-color: #ef4444; color: white; border-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-black text-slate-300">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+                AI Learning Path Generator
+            </h1>
+            <p class="mt-3 text-lg text-slate-400 max-w-2xl mx-auto">Enter your career goal and experience level to generate a personalized, step-by-step learning plan with curated resources.</p>
+        </header>
+
+        <!-- Input Form -->
+        <form id="path-form" class="bg-slate-900/70 border border-slate-700 p-8 rounded-2xl shadow-2xl mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="current-skills" class="block text-sm font-medium text-slate-400 mb-2">Your Current Skills</label>
+                    <input type="text" id="current-skills" class="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" value="Basic Python, understanding of data structures">
+                </div>
+                <div>
+                    <label for="goal" class="block text-sm font-medium text-slate-400 mb-2">Your Learning Goal</label>
+                    <input type="text" id="goal" class="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" value="Become a Machine Learning Engineer">
+                </div>
+                <div>
+                    <label for="experience" class="block text-sm font-medium text-slate-400 mb-2">Experience Level</label>
+                    <select id="experience" class="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                        <option>Beginner (0-1 years)</option>
+                        <option selected>Intermediate (1-3 years)</option>
+                        <option>Advanced (3+ years)</option>
+                    </select>
+                </div>
+                 <div>
+                    <label for="learning-style" class="block text-sm font-medium text-slate-400 mb-2">Preferred Learning Style</label>
+                    <select id="learning-style" class="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                        <option selected>Project-Based (Hands-on)</option>
+                        <option>Visual (Videos & Demos)</option>
+                        <option>Theoretical (Reading & Concepts)</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" id="submit-button" class="submit-button mt-6 w-full text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center">
+                <span id="button-text">Generate My Path</span>
+                <div id="loader" class="hidden ml-2">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+            </button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results-container">
+            <!-- AI generated content will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Generic Modal for Projects & Quizzes -->
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0" onclick="closeModal()"></div>
+        <div id="modal-content" class="modal-content bg-slate-900 border border-slate-700 rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 relative">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('path-form');
+        const resultsContainer = document.getElementById('results-container');
+        const submitButton = document.getElementById('submit-button');
+        const loader = document.getElementById('loader');
+        const buttonText = document.getElementById('button-text');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentSkills = document.getElementById('current-skills').value;
+            const goal = document.getElementById('goal').value;
+            const experience = document.getElementById('experience').value;
+            const learningStyle = document.getElementById('learning-style').value;
+
+            resultsContainer.innerHTML = '';
+            loader.classList.remove('hidden');
+            buttonText.innerText = 'Building Your Path...';
+            submitButton.disabled = true;
+            
+            try {
+                const response = await fetch('/api/generate-path', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ currentSkills, goal, experience, learningStyle }),
+                });
+                if (!response.ok) throw new Error((await response.json()).error || 'Network response was not ok');
+                const data = await response.json();
+                
+                if (data.recommendedCourses && data.recommendedCourses.length > 0) {
+                    displayCourseRecommendations(data.recommendedCourses);
+                } else {
+                    displayError('Could not generate recommendations for this goal.');
+                }
+            } catch (error) {
+                displayError(`Failed to generate recommendations: ${error.message}`);
+            } finally {
+                loader.classList.add('hidden');
+                buttonText.innerText = 'Generate My Path';
+                submitButton.disabled = false;
+            }
+        });
+
+        function displayCourseRecommendations(path) {
+            let html = '<div class="space-y-8">';
+            const goal = document.getElementById('goal').value;
+
+            path.forEach((step, index) => {
+                html += `
+                    <div class="fade-in bg-slate-900/70 border border-slate-700 p-6 rounded-2xl" style="animation-delay: ${index * 150}ms;">
+                        <div class="flex items-center gap-4">
+                             <span class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/20 text-orange-400 font-bold text-lg">${step.step}</span>
+                             <h3 class="text-2xl font-bold text-slate-100">${step.topic}</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2 my-4 pl-14">
+                            <button onclick="handleGenerateQuiz(this, '${step.topic}')" class="bg-green-500/10 text-green-400 font-semibold py-2 px-4 rounded-lg text-sm hover:bg-green-500/20 transition-colors flex items-center">
+                                🧠 Take a Quiz
+                                <span class="loader hidden ml-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>
+                            </button>
+                            <button onclick="handleProjectSuggest(this, '${step.topic}', '${goal}')" class="bg-purple-500/10 text-purple-400 font-semibold py-2 px-4 rounded-lg text-sm hover:bg-purple-500/20 transition-colors flex items-center">
+                                ✨ Suggest a Project
+                                <span class="loader hidden ml-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>
+                            </button>
+                            <button onclick="handleFetchResources(this, '${step.topic}', '${goal}')" class="bg-sky-500/10 text-sky-400 font-semibold py-2 px-4 rounded-lg text-sm hover:bg-sky-500/20 transition-colors flex items-center">
+                                📚 Find Resources
+                                <span class="loader hidden ml-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-14">
+                            ${step.courses.length > 0 ? step.courses.map(course => createCourseCard(course)).join('') : '<p class="text-slate-400 md:col-span-2">No specific courses found in our local database for this topic, but it is a key step in your learning journey!</p>'}
+                        </div>
+                        <div id="resources-for-step-${step.step}" class="mt-4 pl-14"></div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            resultsContainer.innerHTML = html;
+        }
+        
+        function createCourseCard(course) {
+             return `
+                <a href="${course.course_url}" target="_blank" rel="noopener noreferrer" class="course-card block bg-slate-800/50 border border-slate-700 p-5 rounded-xl hover:border-orange-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-sm font-semibold px-3 py-1 rounded-full ${getPlatformColor(course.platform)}">${course.platform}</span>
+                    </div>
+                    <h4 class="font-bold text-lg text-slate-100 leading-tight">${course.course_title}</h4>
+                    <p class="text-sm text-slate-400 mt-1">${course.reason || ''}</p>
+                </a>
+            `;
+        }
+
+        function getPlatformColor(platform) {
+            switch (platform.toLowerCase()) {
+                case 'coursera': return 'bg-blue-500/20 text-blue-300';
+                case 'udemy': return 'bg-purple-500/20 text-purple-300';
+                default: return 'bg-slate-600/50 text-slate-300';
+            }
+        }
+
+        // --- MODAL & LOADER HELPERS ---
+        function showLoader(button) { button.querySelector('.loader').classList.remove('hidden'); button.disabled = true; }
+        function hideLoader(button) { button.querySelector('.loader').classList.add('hidden'); button.disabled = false; }
+        function openModal() { modal.classList.remove('hidden'); modal.classList.add('flex', 'modal-open'); }
+        function closeModal() { modal.classList.add('hidden'); modal.classList.remove('flex', 'modal-open'); }
+
+        // --- FEATURE HANDLERS ---
+        async function handleProjectSuggest(button, topic, goal) {
+            showLoader(button);
+            try {
+                const response = await fetch('/api/suggest-project', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic, goal }),
+                });
+                if (!response.ok) throw new Error((await response.json()).error);
+                const project = await response.json();
+                modalContent.innerHTML = `
+                    <h2 class="text-2xl font-bold mb-4 text-slate-100">${project.project_title}</h2>
+                    <p class="text-slate-400 mb-4">${project.description}</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-slate-200 mb-2">Key Features:</h3>
+                        <ul class="list-disc list-inside text-slate-400 space-y-1">${project.key_features.map(f => `<li>${f}</li>`).join('')}</ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-slate-200 mb-2">Technologies:</h3>
+                        <div class="flex flex-wrap gap-2">${project.technologies.map(t => `<span class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-0.5 rounded-full">${t}</span>`).join('')}</div>
+                    </div>
+                    <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-300 text-2xl">&times;</button>
+                `;
+                openModal();
+            } catch (error) { alert(`Error suggesting project: ${error.message}`); } 
+            finally { hideLoader(button); }
+        }
+
+        async function handleFetchResources(button, topic, goal) {
+            const stepCard = button.closest('.fade-in');
+            const resourceContainer = stepCard.querySelector(`[id^="resources-for-step-"]`);
+            if (resourceContainer.innerHTML) { resourceContainer.innerHTML = ''; return; }
+
+            showLoader(button);
+            try {
+                const response = await fetch('/api/fetch-resources', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic, goal }),
+                });
+                if (!response.ok) throw new Error((await response.json()).error);
+                const resources = await response.json();
+                displayResources(resourceContainer, resources);
+            } catch (error) {
+                resourceContainer.innerHTML = `<p class="text-red-400 text-sm">Error: ${error.message}</p>`;
+            } finally { hideLoader(button); }
+        }
+        
+        function displayResources(container, resources) {
+            let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 border-t border-slate-700 pt-4">';
+            const createLink = (item) => `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="block text-sm p-3 rounded-lg bg-slate-800 hover:bg-slate-700/50">${item.title}</a>`;
+            
+            html += '<div><h4 class="font-semibold text-slate-200 mb-2">Top YouTube Tutorials</h4><div class="space-y-2">';
+            (resources.youtube_tutorials || []).forEach(video => { html += createLink(video); });
+            html += '</div></div>';
+
+            html += '<div><h4 class="font-semibold text-slate-200 mb-2">Top Articles & Blogs</h4><div class="space-y-2">';
+            (resources.articles || []).forEach(article => { html += createLink(article); });
+            html += '</div></div>';
+            
+            if (resources.google_codelab && resources.google_codelab.url) {
+                html += `<div class="md:col-span-2 mt-2"><h4 class="font-semibold text-slate-200 mb-2">Recommended Google Codelab</h4>`;
+                html += createLink(resources.google_codelab);
+                html += '</div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function handleGenerateQuiz(button, topic) {
+            showLoader(button);
+            try {
+                const response = await fetch('/api/generate-quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic }),
+                });
+                if (!response.ok) throw new Error((await response.json()).error);
+                const quiz = await response.json();
+                displayQuiz(quiz, topic);
+            } catch (error) { alert(`Error generating quiz: ${error.message}`); } 
+            finally { hideLoader(button); }
+        }
+
+        function displayQuiz(quiz, topic) {
+            let quizHtml = `
+                <h2 class="text-2xl font-bold mb-4 text-slate-100">Quiz: ${topic}</h2>
+                <div id="quiz-questions" class="space-y-6">
+            `;
+
+            (quiz.questions || []).forEach((q, index) => {
+                quizHtml += `
+                    <div class="question-block" data-correct-answer="${q.correct_answer}">
+                        <p class="font-semibold mb-2 text-slate-200">${index + 1}. ${q.question}</p>
+                        <div class="space-y-2">
+                            ${(q.options || []).map(opt => `<button class="quiz-option w-full text-left p-3 border border-slate-600 rounded-lg bg-slate-800 hover:bg-slate-700" onclick="selectAnswer(this)">${opt}</button>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            quizHtml += `</div><div class="mt-6 text-right"><button id="submit-quiz-btn" class="submit-button text-white font-semibold py-2 px-5 rounded-lg" onclick="submitQuiz()">Check Answers</button></div>`;
+            quizHtml += `<button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-300 text-2xl">&times;</button>`;
+            modalContent.innerHTML = quizHtml;
+            openModal();
+        }
+
+        function selectAnswer(button) {
+            const options = button.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        function submitQuiz() {
+            const questionBlocks = document.querySelectorAll('.question-block');
+            questionBlocks.forEach(block => {
+                const correctAnswer = block.dataset.correctAnswer;
+                const selectedOption = block.querySelector('.quiz-option.selected');
+                
+                if (selectedOption) {
+                    const selectedAnswer = selectedOption.innerText;
+                    block.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.disabled = true;
+                        if (opt.innerText === correctAnswer) opt.classList.add('correct');
+                    });
+                    if (selectedAnswer !== correctAnswer) selectedOption.classList.add('incorrect');
+                }
+            });
+            document.getElementById('submit-quiz-btn').style.display = 'none';
+        }
+        
+        function displayError(message) {
+            resultsContainer.innerHTML = `
+                <div class="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-lg" role="alert">
+                    <p class="font-bold">An Error Occurred</p>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
