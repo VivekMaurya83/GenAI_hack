@@ -1,0 +1,266 @@
+/* frontend/login.css */
+/* --- GenAI Theme Variables for Login/Signup --- */
+:root {
+    --primary-genai-color: #00C254; /* A vibrant green for GenAI accents */
+    --secondary-genai-color: #007BFF; /* A subtle blue for secondary actions/links */
+    --background-dark: #1A1A2E; /* Deep dark background */
+    --card-bg-dark: #2A2A4A; /* Slightly lighter dark for cards */
+    --text-light: #E0E0E0; /* Light text for readability */
+    --text-medium: #B0B0C0; /* Medium grey text */
+    --text-subtle: #808090; /* Subtler text for hints */
+    --border-dark: #3A3A5A; /* Darker border for contrast */
+    --input-bg-dark: #3A3A5A; /* Input field background */
+    --error-red: #E05252; /* Red for errors */
+    --success-green: #4CAF50; /* Green for success */
+    --shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.6); /* Darker shadow */
+    --font-stack: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--font-stack);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    overflow: auto; /* Allow scrolling if content is too tall */
+}
+
+.container.auth-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background-color: var(--card-bg-dark);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    border: 1px solid var(--border-dark);
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+h1 {
+    color: var(--primary-genai-color);
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+p {
+    color: var(--text-medium);
+    margin-bottom: 1.5rem;
+}
+
+form {
+    margin-top: 1.5rem;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-stack);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    border-color: var(--primary-genai-color);
+    box-shadow: 0 0 0 2px rgba(0, 194, 84, 0.3);
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-genai-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    margin-top: 1rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #00A347;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"]:disabled {
+    background-color: #505060;
+    cursor: not-allowed;
+}
+
+.form-toggle-text {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-medium);
+}
+.form-toggle-text a {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.form-toggle-text a:hover {
+    text-decoration: underline;
+}
+
+.divider-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    color: var(--text-subtle);
+}
+.divider-text::before,
+.divider-text::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--border-dark);
+}
+.divider-text span {
+    padding: 0 15px;
+    background-color: var(--card-bg-dark);
+    position: relative;
+    z-index: 1;
+}
+
+.google-btn {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.0rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1rem;
+}
+.google-btn:hover {
+    background-color: #357AE8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: var(--error-red);
+    background-color: rgba(224, 82, 82, 0.2);
+    border: 1px solid var(--error-red);
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.success {
+    color: var(--success-green);
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid var(--success-green);
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.password-input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.password-input-group input {
+    width: calc(100% - 24px);
+    padding-right: 40px;
+    margin-bottom: 0;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-subtle);
+    font-size: 1.1em; /* Adjusted slightly for icons */
+    /* Removed font-weight, text-transform, user-select as they are not needed for icons */
+    transition: color 0.2s;
+}
+
+.toggle-password:hover {
+    color: var(--text-medium);
+}
+
+.forgot-password-link {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: text-decoration 0.2s;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+/* Specific spacing adjustments for the reordered elements */
+.card h1 + p {
+    margin-bottom: 1.5rem;
+}
+.card p + .divider-text {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.card .google-btn + .divider-text {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.card form + p.form-toggle-text {
+    margin-top: 1.5rem;
+}
+.card .error {
+    margin-top: 1.5rem;
+}
+
+#login-form-container{
+    width:450px;
+}

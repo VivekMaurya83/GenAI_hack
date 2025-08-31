@@ -1,8 +1,0 @@
-fastapi
-uvicorn[standard]
-python-multipart
-PyMuPDF
-python-dotenv
-python-docx
-mysql-connector-python
-google-generativeai

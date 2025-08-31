@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - AI Career Coach</title>
+    <!-- Global styles for theme variables and basic resets -->
+    <link rel="stylesheet" href="temp.css">
+    <!-- Profile-specific styles for layout and components -->
+    <link rel="stylesheet" href="./style/profile.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<!-- Added a specific class to the body for profile page layout -->
+<body class="profile-page-layout">
+    <div class="container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1><i class="fas fa-user-circle"></i> Your Profile</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+                <button id="logoutButton" class="nav-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </nav>
+        </header>
+
+        <!-- Account Information Card -->
+        <div class="card profile-info-card">
+            <h2><i class="fas fa-info-circle"></i> Account Information</h2>
+            <p><strong>Name:</strong> <span id="user-name">Loading...</span></p>
+            <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+        </div>
+
+        <!-- Resume Details Card -->
+        <div class="card resume-details-card">
+            <h2><i class="fas fa-address-card"></i> Your Resume Details</h2>
+            <p class="section-description">Edit and save specific sections of your resume. This directly updates the structured data used by our AI.</p>
+
+            <form id="edit-resume-details-form">
+                <h3>Personal Information</h3>
+                <div class="form-group">
+                    <label for="profileName">Name:</label>
+                    <input type="text" id="profileName" placeholder="Your Full Name" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="profileEmail">Email:</label>
+                    <input type="email" id="profileEmail" placeholder="your.email@example.com" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="profilePhone">Phone:</label>
+                    <input type="tel" id="profilePhone" placeholder="+1 (555) 123-4567" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="profileLinkedin">LinkedIn Profile URL:</label>
+                    <input type="url" id="profileLinkedin" placeholder="https://linkedin.com/in/yourprofile" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="profileGithub">GitHub Profile URL:</label>
+                    <input type="url" id="profileGithub" placeholder="https://github.com/yourusername" disabled>
+                </div>
+
+                <h3>Summary</h3>
+                <div class="form-group">
+                    <label for="profileSummary">Summary/Objective:</label>
+                    <textarea id="profileSummary" rows="6" placeholder="A concise summary of your professional goals and experience." disabled></textarea>
+                </div>
+
+                <h3>Skills</h3>
+                <div class="form-group">
+                    <label for="profileSkills">Skills (comma-separated):</label>
+                    <textarea id="profileSkills" rows="4" placeholder="e.g., Python, JavaScript, Machine Learning, Data Analysis" disabled></textarea>
+                    <small>Enter all your skills, separated by commas. Our AI will categorize them.</small>
+                </div>
+
+                <h3>Projects</h3>
+                <div class="form-group">
+                    <label for="profileProjects">Projects (Title - Description, each on a new line):</label>
+                    <textarea id="profileProjects" rows="8" placeholder="e.g., Project X - Developed a web app using React and Node.js.&#10;AI Recommender - Built a recommendation system with TensorFlow." disabled></textarea>
+                    <small>List each project on a new line. Use "Title - Description" format.</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="editResumeDetailsButton" class="btn primary-btn"><i class="fas fa-edit"></i> Edit Details</button>
+                    <button type="submit" id="saveResumeDetailsButton" class="btn primary-btn" style="display: none;"><i class="fas fa-save"></i> Save Changes</button>
+                    <button type="button" id="cancelEditDetailsButton" class="btn secondary-btn" style="display: none;"><i class="fas fa-times"></i> Cancel</button>
+                </div>
+            </form>
+            <div id="details-update-status" class="status-message hidden"></div>
+        </div>
+
+        <!-- Upload New Resume Card -->
+        <div class="card upload-resume-card">
+            <h2><i class="fas fa-upload"></i> Upload New Resume File</h2>
+            <p class="section-description">Upload a new PDF or DOCX file. This will replace ALL existing resume data. For minor edits, use the "Your Resume Details" section above.</p>
+            <form id="upload-resume-file-form">
+                <div class="form-group">
+                    <label for="resumeFileInput">Select File (.pdf, .docx):</label>
+                    <input type="file" id="resumeFileInput" name="resume_file" accept=".pdf,.docx" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="uploadResumeFileButton" class="btn primary-btn"><i class="fas fa-file-upload"></i> Upload & Process</button>
+                </div>
+            </form>
+            <div id="file-upload-status" class="status-message hidden"></div>
+        </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="./script/auth.js"></script>
+    <script src="./script/profile.js"></script>
+</body>
+</html>

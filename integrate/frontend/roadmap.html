@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Generator - AI Career Coach</title>
+    <!-- Global styles for theme variables and basic resets -->
+    <link rel="stylesheet" href="temp.css">
+    <!-- Roadmap-specific styles for layout and components -->
+    <link rel="stylesheet" href="./style/roadmap.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<!-- Added a specific class to the body for roadmap page layout -->
+<body class="roadmap-page-layout">
+<div class="container">
+    <header class="page-header">
+        <h1><i class="fas fa-map-marked-alt"></i> Elaborative Roadmap Generator</h1>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-link"><i class="fas fa-arrow-left"></i> Home</a>
+            <a href="profile.html" class="nav-link"><i class="fas fa-user-circle"></i> Profile</a>
+            <button id="logoutButton" class="nav-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+    </header>
+
+    <div class="card">
+        <form id="roadmap-generation-form">
+            <div class="input-grid">
+                <fieldset>
+                    <legend><i class="fas fa-play"></i> Your Starting Point</legend>
+                    <div class="form-group">
+                        <label for="currentSkillsInput">Enter Your Current Skills & Projects</label>
+                        <textarea id="currentSkillsInput" rows="5" placeholder="e.g., Skills: Python, SQL...&#10;Projects: Built a portfolio website..."></textarea>
+                        <small>These will be auto-filled from your resume if available. Format as: Skills: A, B, C. Projects: ProjectX - Desc, ProjectY - Desc</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="currentLevel">Your Current Proficiency</label>
+                        <select id="currentLevel" required>
+                            <option value="">Select Level</option>
+                            <option value="Novice">Novice</option>
+                            <option value="Proficient" selected>Proficient</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend><i class="fas fa-flag-checkered"></i> Your Destination</legend>
+                    <div class="form-group">
+                        <label for="goalInput">Paste Job Description OR Describe Desired Role</label>
+                        <textarea id="goalInput" rows="8" placeholder="e.g., Senior Frontend Developer at Google... OR I want to become an expert in backend development with Python and AWS..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalLevel">Desired Proficiency</label>
+                        <select id="goalLevel" required>
+                            <option value="">Select Level</option>
+                            <option value="Proficient">Proficient</option>
+                            <option value="Job-Ready" selected>Job-Ready</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </div>
+            <fieldset>
+                <legend><i class="fas fa-hourglass-half"></i> Your Timeline</legend>
+                <div class="grid-inputs-small">
+                    <div class="form-group">
+                        <label for="duration">Timeframe</label>
+                        <select id="duration" required>
+                            <option value="">Select Duration</option>
+                            <option value="3 months">3 Months</option>
+                            <option value="6 months" selected>6 Months</option>
+                            <option value="1 year">1 Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="studyHours">Study Hours / Month</label>
+                        <input type="number" id="studyHours" value="25" min="5" required>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <button type="submit" id="generateRoadmapButton" class="btn primary-btn"><i class="fas fa-rocket"></i> Generate My Strategic Plan</button>
+                <button type="button" id="imStuckButton" class="btn secondary-btn"><i class="fas fa-robot"></i> I'm Stuck! (Chatbot)</button>
+            </div>
+            <div id="roadmap-status" class="status-message hidden"></div>
+        </form>
+    </div>
+
+    <div id="loading" class="hidden"><div class="spinner"></div><p>Your AI strategist is building your plan...</p></div>
+    
+    <div id="results-section" class="card hidden">
+        <h2><i class="fas fa-chart-line"></i> Your Strategic Action Plan</h2>
+        <div class="results-grid">
+            <div class="result-card" id="score-card">
+                <h3>Job Match Score</h3>
+                <div class="score-container">
+                    <div class="score-circle"><span id="score-value">0%</span></div>
+                    <p id="score-summary"></p>
+                </div>
+            </div>
+            <div class="result-card" id="summary-card">
+                <h3><i class="fas fa-star"></i> Priority Skills to Learn</h3>
+                <ul id="summary-list"></ul>
+            </div>
+        </div>
+        <div class="result-card" id="timeline-card">
+            <h3><i class="fas fa-calendar-alt"></i> High-Level Timeline</h3>
+            <div class="chart-container"><canvas id="timeline-chart"></canvas></div>
+        </div>
+        <div class="result-card" id="roadmap-card">
+            <h3><i class="fas fa-list-ol"></i> Interactive Roadmap</h3>
+            <div id="detailed-roadmap-container"></div>
+        </div>
+        <div class="result-card" id="projects-card">
+            <h3><i class="fas fa-project-diagram"></i> Suggested Projects</h3>
+            <div id="projects-container"></div>
+        </div>
+        <div class="result-card" id="courses-card">
+            <h3><i class="fas fa-graduation-cap"></i> Recommended Courses</h3>
+            <div id="courses-container"></div>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="startNewRoadmapButton" class="btn secondary-btn"><i class="fas fa-redo-alt"></i> Start New Roadmap</button>
+        </div>
+    </div>
+
+    <!-- Tutor Modal -->
+    <div id="tutor-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" id="closeTutorModalButton">&times;</span>
+            <h2 id="modal-topic-title"></h2>
+            <div id="tutor-loading-state" class="hidden"><div class="spinner"></div><p>Thinking like a tutor...</p></div>
+            <div id="tutor-response-content" class="hidden">
+                <div class="explanation-section"><h4><i class="fas fa-lightbulb"></i> Analogy</h4><p id="analogy-text"></p></div>
+                <div class="explanation-section"><h4><i class="fas fa-book"></i> Technical Definition</h4><div id="technical-definition-text"></div></div>
+                <div class="explanation-section"><h4><i class="fas fa-sitemap"></i> Prerequisites</h4><ul id="prerequisites-list"></ul></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Window -->
+    <button id="chatbot-float-button" class="floating-button hidden"><i class="fas fa-robot"></i></button>
+    <div id="chatbot-window" class="chatbot-window hidden">
+        <div class="chatbot-header"><h4><i class="fas fa-headset"></i> AI Career Assistant</h4><button id="close-chatbot-button" class="close-button">&times;</button></div>
+        <div class="chatbot-body"><div id="chat-messages"></div></div>
+        <div class="chatbot-footer">
+            <form id="chatbot-form" class="chat-input-form">
+                <input type="text" id="chat-input" placeholder="Ask about your plan..." required>
+                <button type="submit" id="send-chat-button" class="btn primary-btn"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="./script/auth.js"></script>
+    <script src="./script/roadmap.js"></script>
+</body>
+</html>

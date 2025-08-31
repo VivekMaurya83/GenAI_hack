@@ -1,0 +1,357 @@
+/* frontend/profile.css */
+
+/* General page layout for profile */
+body.profile-page-layout {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 3rem; /* Space at the bottom */
+}
+
+.profile-page-layout .container {
+    max-width: 900px; /* Wider container for profile details */
+    padding-top: 2rem; /* Space from the top */
+}
+
+/* Page Header */
+.page-header {
+    background-color: var(--card-bg-dark);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 1rem; /* Space between items */
+    width: 100%; /* Ensure it spans the container width */
+    box-sizing: border-box;
+}
+
+.page-header h1 {
+    color: var(--primary-genai-color);
+    font-size: 2em;
+    margin: 0;
+    flex-grow: 1; /* Allow title to take space */
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h1 i {
+    font-size: 0.9em; /* Icon size relative to H1 */
+    color: var(--primary-genai-color);
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between nav links/buttons */
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Align to right */
+}
+
+.header-nav .nav-link {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--secondary-genai-color);
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.header-nav .nav-link:hover {
+    background-color: var(--secondary-genai-color);
+    color: var(--background-dark);
+}
+
+.header-nav .nav-button {
+    background-color: #E05252; /* Red for logout */
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav .nav-button:hover {
+    background-color: #C0392B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Card Styling (inherits from style.css, but add specific margins) */
+.profile-info-card,
+.resume-details-card,
+.upload-resume-card {
+    margin-bottom: 2rem; /* Space between cards */
+    text-align: left; /* Align text left within cards */
+}
+
+.card h2 {
+    color: var(--primary-genai-color);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 i {
+    font-size: 0.9em;
+    color: var(--primary-genai-color);
+}
+
+.card h3 {
+    color: var(--text-light);
+    font-size: 1.4em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px dotted var(--border-dark); /* Subtle separator for sections */
+    padding-bottom: 0.5rem;
+}
+
+.section-description {
+    color: var(--text-subtle);
+    font-size: 0.95em;
+    margin-top: -0.8rem; /* Pull up closer to title */
+    margin-bottom: 1.5rem;
+}
+
+/* Profile Info Card specific styles */
+.profile-info-card p {
+    font-size: 1.1em;
+    margin-bottom: 0.8rem;
+    color: var(--text-light);
+}
+
+.profile-info-card strong {
+    color: var(--text-medium);
+    min-width: 80px; /* Align labels */
+    display: inline-block;
+}
+
+/* Form Group styling */
+.form-group {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column; /* Stack label and input */
+    align-items: flex-start;
+}
+
+.form-group label {
+    color: var(--text-medium);
+    font-size: 0.95em;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea {
+    width: 100%; /* Ensure inputs fill container */
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-stack);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+    border-color: var(--primary-genai-color);
+    box-shadow: 0 0 0 2px rgba(0, 194, 84, 0.3);
+    outline: none;
+}
+
+/* Disabled state for inputs */
+input:disabled,
+textarea:disabled {
+    background-color: rgba(0, 0, 0, 0.2); /* Darker, less interactive background */
+    border-color: var(--border-dark);
+    color: var(--text-subtle);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+.form-group small {
+    color: var(--text-subtle);
+    font-size: 0.85em;
+    margin-top: 0.5rem;
+    padding-left: 5px; /* Indent helper text slightly */
+}
+
+/* Form Actions (buttons) */
+.form-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+    justify-content: flex-end; /* Align buttons to the right */
+    flex-wrap: wrap; /* Allow buttons to wrap */
+}
+
+.form-actions .btn {
+    padding: 12px 25px; /* Slightly larger padding for better click area */
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    border: none; /* Remove default button border */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-actions .btn.primary-btn {
+    background-color: var(--primary-genai-color);
+    color: var(--background-dark); /* Dark text on green for contrast */
+}
+
+.form-actions .btn.primary-btn:hover {
+    background-color: #00A347;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn.secondary-btn {
+    background-color: transparent;
+    color: var(--text-medium);
+    border: 1px solid var(--border-dark);
+}
+
+.form-actions .btn.secondary-btn:hover {
+    background-color: var(--border-dark); /* Darken background on hover */
+    color: var(--text-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn:disabled {
+    background-color: #505060;
+    color: var(--text-subtle);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border: none;
+}
+.form-actions .btn.secondary-btn:disabled {
+    background-color: transparent;
+    border-color: #505060;
+    color: var(--text-subtle);
+}
+
+/* File Upload Specific */
+input[type="file"] {
+    background-color: var(--input-bg-dark); /* Match other inputs */
+    color: var(--text-light);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 8px 10px; /* Adjust padding for file input */
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: var(--secondary-genai-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.2s;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #0060d0;
+}
+
+
+/* Status messages */
+.status-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.status-message.error {
+    color: var(--error-red);
+    background-color: rgba(224, 82, 82, 0.2);
+    border: 1px solid var(--error-red);
+}
+
+.status-message.success {
+    color: var(--success-green);
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid var(--success-green);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-page-layout .container {
+        padding: 1.5rem;
+    }
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+    .page-header h1 {
+        font-size: 1.8em;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.8rem;
+    }
+    .header-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    .header-nav .nav-link,
+    .header-nav .nav-button {
+        flex: 1 1 auto; /* Allow items to grow/shrink */
+        text-align: center;
+    }
+    .form-actions {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 0.8rem;
+    }
+    .form-actions .btn {
+        width: 100%;
+    }
+}

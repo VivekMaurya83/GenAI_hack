@@ -1,0 +1,376 @@
+/* --- Dashboard Specific Styles (home.html) --- */
+
+/* Adjust body for dashboard layout when not centering a single card */
+body.dashboard-layout {
+    display: flex; /* Use flex for main layout */
+    justify-content: flex-start; /* Align content to start */
+    align-items: flex-start; /* Align items to start */
+    min-height: 100vh;
+    overflow-y: auto; /* Allow vertical scrolling */
+    flex-direction: row; /* Main layout is row-based (sidebar + content) */
+}
+
+/* Main content area for the dashboard */
+.dashboard-main-content {
+    flex-grow: 1; /* Allow content to take available space */
+    padding: 2rem; /* Overall padding for the content area */
+    box-sizing: border-box;
+    max-width: calc(100% - 250px); /* If sidebar is 250px */
+}
+
+/* Re-define H1 specifically for dashboard if needed */
+.dashboard-main-content h1 {
+    color: var(--primary-genai-color); /* Use primary color for main headings */
+    font-size: 2.5em; /* A prominent size */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: left; /* Align to left within content area */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    min-width: 250px; /* Ensure it doesn't shrink */
+    background-color: var(--card-bg-dark); /* Dark background */
+    color: var(--text-light);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow-dark);
+    border-right: 1px solid var(--border-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Space between sidebar items */
+    position: sticky; /* Sticky sidebar */
+    top: 0;
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allow sidebar scrolling if too long */
+}
+
+.sidebar h2 {
+    color: var(--primary-genai-color);
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav li {
+    margin-bottom: 0.8rem;
+}
+
+.sidebar nav a {
+    display: block;
+    color: var(--text-medium);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar nav a i { /* Font Awesome icons in sidebar */
+    font-size: 1.2em;
+    color: var(--text-subtle);
+    transition: color 0.2s;
+}
+
+.sidebar nav a:hover {
+    background-color: rgba(0, 194, 84, 0.1); /* Light green tint */
+    color: var(--primary-genai-color);
+}
+
+.sidebar nav a.active {
+    background-color: var(--primary-genai-color);
+    color: var(--background-dark); /* Dark text on active green */
+    font-weight: 600;
+}
+
+.sidebar nav a.active i {
+    color: var(--background-dark); /* Dark icon on active green */
+}
+
+
+/* Dashboard Header (within main content) */
+.dashboard-header {
+    background-color: var(--card-bg-dark);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-radius: 12px; /* Rounded corners for header card */
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-dark);
+}
+
+.dashboard-header h1 {
+    color: var(--primary-genai-color);
+    font-size: 1.8em;
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.dashboard-header p#welcome-message {
+    color: var(--text-light);
+    font-size: 1.1em;
+    font-weight: 500;
+    margin: 0;
+    text-align: left;
+    flex-basis: 100%;
+    order: 3;
+}
+
+.dashboard-header .profile-link {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--secondary-genai-color);
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dashboard-header .profile-link:hover {
+    background-color: var(--secondary-genai-color);
+    color: var(--background-dark);
+}
+
+.dashboard-header .logout-btn {
+    background-color: #E05252;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.dashboard-header .logout-btn:hover {
+    background-color: #C0392B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Quick Stats Section */
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: var(--card-bg-dark);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    border: 1px solid var(--border-dark);
+    text-align: center;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.stat-card h3 {
+    color: var(--text-light);
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    color: var(--primary-genai-color);
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+
+/* Feature Grid (for roadmap, optimizer, etc.) */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.feature-card {
+    background-color: var(--card-bg-dark);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    border: 1px solid var(--border-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    border-color: var(--primary-genai-color);
+}
+
+.feature-card h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-genai-color); /* Use primary color for card titles */
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.feature-card h2 svg,
+.feature-card h2 i { /* Added i for Font Awesome */
+    font-size: 1.2em;
+    color: var(--primary-genai-color); /* Icons match title color */
+}
+
+.feature-card p {
+    color: var(--text-medium);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.feature-card .card-btn {
+    align-self: flex-start;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Button styles (copied from style.css, but for home-specific buttons) */
+.card-btn {
+    padding: 15px;
+    background-color: var(--primary-genai-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    margin-top: 1rem;
+}
+
+.card-btn:hover {
+    background-color: #00A347;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.card-btn:disabled {
+    background-color: #505060;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .dashboard-main-content {
+        max-width: 100%; /* Allow main content to take full width */
+        padding: 1.5rem;
+    }
+    body.dashboard-layout {
+        flex-direction: column; /* Stack sidebar and content vertically */
+    }
+    .sidebar {
+        width: 100%; /* Sidebar takes full width */
+        min-width: unset;
+        height: auto; /* Auto height for content */
+        position: relative; /* Not sticky anymore */
+        border-right: none; /* No vertical border */
+        border-bottom: 1px solid var(--border-dark); /* Bottom border instead */
+        padding-bottom: 1rem; /* Adjust padding */
+    }
+    .sidebar nav ul {
+        display: flex; /* Horizontal navigation on small screens */
+        flex-wrap: wrap; /* Allow items to wrap */
+        justify-content: center; /* Center items */
+        gap: 0.5rem; /* Space between items */
+    }
+    .sidebar nav li {
+        margin-bottom: 0; /* Remove vertical margin */
+    }
+    .sidebar nav a {
+        padding: 0.6rem 1rem;
+        font-size: 0.9em;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+    .dashboard-header h1 {
+        font-size: 1.5em;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .dashboard-header p#welcome-message {
+        font-size: 1em;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 1rem;
+        order: 2;
+    }
+    .dashboard-header .profile-link,
+    .dashboard-header .logout-btn {
+        width: calc(50% - 0.5rem);
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    .dashboard-header .profile-link {
+        order: 4;
+    }
+    .dashboard-header .logout-btn {
+        order: 5;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .feature-card .card-btn {
+        width: 100%;
+        align-self: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header .profile-link,
+    .dashboard-header .logout-btn {
+        width: 100%; /* Stack buttons on very small screens */
+    }
+    .sidebar nav ul {
+        flex-direction: column; /* Stack sidebar items again on very small screens */
+        align-items: center;
+    }
+
+}

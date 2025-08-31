@@ -1,0 +1,9 @@
+fastapi[all]
+uvicorn[standard]
+python-multipart
+google-generativeai
+firebase-admin
+PyMuPDF
+python-dotenv
+python-docx
+pydantic[email]

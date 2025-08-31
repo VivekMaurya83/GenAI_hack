@@ -1,0 +1,559 @@
+/* frontend/optimizer.css */
+
+/* Overall page layout for the optimizer */
+body.optimizer-page-layout {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 3rem; /* Space at the bottom */
+}
+
+.optimizer-page-layout .container {
+    max-width: 900px; /* Wider container for optimizer content */
+    padding-top: 2rem; /* Space from the top */
+}
+
+/* Page Header (Consistent with Profile page) */
+.page-header {
+    background-color: var(--card-bg-dark);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.page-header h1 {
+    color: var(--primary-genai-color);
+    font-size: 2em;
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h1 i {
+    font-size: 0.9em;
+    color: var(--primary-genai-color);
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.header-nav .nav-link {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--secondary-genai-color);
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s, transform 0.1s ease-out;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex; /* For icon */
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav .nav-link:hover {
+    background-color: var(--secondary-genai-color);
+    color: var(--background-dark);
+    transform: translateY(-2px);
+}
+
+.header-nav .nav-button {
+    background-color: #E05252;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav .nav-button:hover {
+    background-color: #C0392B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Card Styling (inherits from style.css, but add specific margins) */
+.card {
+    margin-bottom: 2rem; /* Space between cards */
+    text-align: left; /* Align text left within cards */
+}
+
+.card h2 {
+    color: var(--primary-genai-color);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 i {
+    font-size: 0.9em;
+    color: var(--primary-genai-color);
+}
+
+.section-description {
+    color: var(--text-subtle);
+    font-size: 0.95em;
+    margin-top: -0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Group styling */
+.form-group {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    color: var(--text-medium);
+    font-size: 0.95em;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-stack);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="file"]:focus,
+textarea:focus {
+    border-color: var(--primary-genai-color);
+    box-shadow: 0 0 0 2px rgba(0, 194, 84, 0.3);
+    outline: none;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: var(--secondary-genai-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.2s;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #0060d0;
+}
+
+/* Form Actions (buttons) */
+.form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.form-actions .btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-actions .btn.primary-btn {
+    background-color: var(--primary-genai-color);
+    color: var(--background-dark);
+}
+
+.form-actions .btn.primary-btn:hover {
+    background-color: #00A347;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn.secondary-btn {
+    background-color: transparent;
+    color: var(--text-medium);
+    border: 1px solid var(--border-dark);
+}
+
+.form-actions .btn.secondary-btn:hover {
+    background-color: var(--border-dark);
+    color: var(--text-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn:disabled {
+    background-color: #505060;
+    color: var(--text-subtle);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* Feature cards for choice section */
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background-color: var(--input-bg-dark);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-dark);
+    text-align: center;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    border-color: var(--secondary-genai-color);
+}
+
+.feature-card h3 {
+    color: var(--text-light);
+    font-size: 1.4em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+.feature-card p {
+    color: var(--text-medium);
+    font-size: 0.95em;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+.feature-card .btn {
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-top: auto;
+}
+
+
+/* Loading Spinner */
+#loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    color: var(--text-medium);
+    font-size: 1.1em;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--primary-genai-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* LinkedIn Content Display */
+#linkedin-content {
+    background-color: var(--input-bg-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    color: var(--text-light);
+    font-size: 1.05em;
+    line-height: 1.8;
+}
+
+#linkedin-content h3 {
+    color: var(--primary-genai-color);
+    font-size: 1.5em;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+#linkedin-content h3:first-child {
+    margin-top: 0;
+}
+#linkedin-content h4 {
+    color: var(--text-light);
+    font-size: 1.2em;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dotted rgba(255,255,255,0.1);
+    padding-bottom: 0.3rem;
+}
+#linkedin-content p {
+    color: var(--text-medium);
+    margin-bottom: 1rem;
+}
+#linkedin-content ul {
+    list-style: disc inside;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-medium);
+}
+#linkedin-content ul li {
+    margin-bottom: 0.5rem;
+}
+
+
+/* Status messages (re-define for this page) */
+.status-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.status-message.error {
+    color: var(--error-red);
+    background-color: rgba(224, 82, 82, 0.2);
+    border: 1px solid var(--error-red);
+}
+
+.status-message.success {
+    color: var(--success-green);
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid var(--success-green);
+}
+
+/* Form toggle text for "upload different resume" or "back" links */
+.form-toggle-text {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    text-align: center;
+}
+.form-toggle-text a {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.form-toggle-text a:hover {
+    text-decoration: underline;
+}
+
+/* REFINED: Resume Template Section Styles */
+.template-section {
+    margin-top: 3.5rem; /* More spacing from the upload form */
+    padding: 2.5rem; /* Generous internal padding */
+    background-color: #30304a; /* A slightly different dark background for distinction */
+    border: 1px solid var(--border-dark); /* Solid border for a cleaner look */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Consistent shadow */
+}
+
+.template-section h3 {
+    color: var(--primary-genai-color); /* Title in primary green */
+    font-size: 1.8em; /* Larger, more prominent title */
+    margin-top: 0;
+    margin-bottom: 1.2rem; /* More space below title */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* More space for icons */
+}
+.template-section h3 i {
+    color: var(--primary-genai-color); /* Icon matches title color */
+    font-size: 1.1em;
+}
+
+.template-description {
+    color: var(--text-medium); /* Description text is more readable */
+    font-size: 1.0em; /* Slightly larger font */
+    margin-bottom: 2.5rem; /* More space before template cards */
+    line-height: 1.6;
+}
+
+.template-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid for cards */
+    gap: 1.8rem; /* Gap between template cards */
+    justify-content: center; /* Center cards if they don't fill the row */
+}
+
+.template-card {
+    background-color: var(--card-bg-dark); /* Card-like background */
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Distinct shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.template-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+    border-color: var(--secondary-genai-color); /* Highlight with secondary color on hover */
+}
+
+.template-preview {
+    width: 100%;
+    max-width: 150px; /* Constrain preview image size */
+    height: auto;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--border-dark);
+    border-radius: 6px;
+    overflow: hidden; /* Hide overflow for rounded corners */
+}
+.template-preview img {
+    width: 100%;
+    height: auto;
+    display: block; /* Remove extra space below image */
+}
+
+.template-card h4 {
+    color: var(--text-light); /* Template title in light text */
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.template-card p {
+    color: var(--text-subtle); /* Description text more subtle */
+    font-size: 0.9em;
+    flex-grow: 1; /* Allow description to take space */
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.template-card .btn.secondary-btn {
+    background-color: rgba(0, 123, 255, 0.15); /* Slightly stronger background */
+    color: var(--secondary-genai-color);
+    border: 1px solid var(--secondary-genai-color);
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease-out;
+    width: auto; /* Buttons size to content */
+    margin-top: auto; /* Push button to the bottom of the card */
+}
+
+.template-card .btn.secondary-btn:hover {
+    background-color: var(--secondary-genai-color);
+    color: var(--background-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .optimizer-page-layout .container {
+        padding: 1.5rem;
+    }
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+    .page-header h1 {
+        font-size: 1.8em;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.8rem;
+    }
+    .header-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    .header-nav .nav-link,
+    .header-nav .nav-button {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+    .form-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .form-actions .btn {
+        width: 100%;
+    }
+    .feature-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Template Section Responsive */
+    .template-section {
+        padding: 1.8rem;
+    }
+    .template-section h3 {
+        font-size: 1.5em;
+        gap: 10px;
+    }
+    .template-cards-grid {
+        grid-template-columns: 1fr; /* Stack templates vertically on small screens */
+    }
+    .template-card .btn.secondary-btn {
+        width: 100%; /* Full width buttons when stacked */
+    }
+}

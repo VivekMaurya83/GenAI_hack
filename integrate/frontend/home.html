@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Career Coach</title>
+    <!-- Global styles -->
+    <link rel="stylesheet" href="temp.css">
+    <!-- Home-specific styles -->
+    <link rel="stylesheet" href="./style/home.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<!-- Added 'dashboard-layout' class to body for main layout -->
+<body class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2>AI Career Coach</h2>
+        <nav>
+            <ul>
+                <li><a href="home.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/roadmap.html"><i class="fas fa-route"></i> Roadmap</a></li>
+                <li><a href="/optimizer.html"><i class="fas fa-file-alt"></i> Resume & LinkedIn</a></li>
+                <li><a href="/assessment.html"><i class="fas fa-chart-line"></i> Skill Assessment</a></li>
+                <li><a href="/jobs.html"><i class="fas fa-briefcase"></i> Job Matching</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profile Settings</a></li>
+            </ul>
+        </nav>
+        <!-- Logout button at the bottom of the sidebar (optional, can also be in header) -->
+        <button id="logout-btn-sidebar" class="logout-btn" style="margin-top: auto;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="dashboard-main-content">
+        <header class="dashboard-header">
+            <h1>Dashboard Overview</h1>
+            <p id="welcome-message"></p>
+            <a href="profile.html" class="profile-link">My Profile</a>
+            <!-- Removed original logout button from header to move to sidebar, or keep one based on preference -->
+            <button id="logout-btn" class="logout-btn hidden">Logout</button> <!-- Hidden if sidebar has one -->
+        </header>
+
+        <!-- Quick Stats Section -->
+        <section class="quick-stats">
+            <div class="stat-card">
+                <h3>Roadmaps Generated</h3>
+                <p>3</p>
+            </div>
+            <div class="stat-card">
+                <h3>Resumes Optimized</h3>
+                <p>2</p>
+            </div>
+            <div class="stat-card">
+                <h3>Skill Assessments</h3>
+                <p>1</p>
+            </div>
+            <div class="stat-card">
+                <h3>Matched Jobs</h3>
+                <p>15</p>
+            </div>
+        </section>
+
+        <!-- Feature Cards Grid -->
+        <main class="dashboard-grid">
+            <!-- Card 1: Elaborative Roadmap -->
+            <div class="feature-card" id="roadmap-card">
+                <h2><i class="fas fa-route"></i> Elaborative Roadmap</h2>
+                <p>Get a personalized, step-by-step career roadmap from your current skills to your desired role.</p>
+                <button class="card-btn">Generate Roadmap</button>
+            </div>
+
+            <!-- Card 2: Resume & LinkedIn Optimizer -->
+            <div class="feature-card" id="optimizer-card">
+                <h2><i class="fas fa-file-alt"></i> Resume & LinkedIn Optimizer</h2>
+                <p>Enhance your resume and LinkedIn profile with AI-powered suggestions to stand out to recruiters.</p>
+                <button class="card-btn">Go to Optimizer</button>
+            </div>
+
+            <!-- New Card 3: Skill Assessment -->
+            <div class="feature-card" id="assessment-card">
+                <h2><i class="fas fa-chart-line"></i> Skill Assessment</h2>
+                <p>Identify your strengths and weaknesses with AI-driven skill assessments to guide your learning.</p>
+                <button class="card-btn">Start Assessment</button>
+            </div>
+
+            <!-- New Card 4: Job Matching -->
+            <div class="feature-card" id="jobs-card">
+                <h2><i class="fas fa-briefcase"></i> AI Job Matching</h2>
+                <p>Discover highly relevant job opportunities tailored to your profile and career aspirations.</p>
+                <button class="card-btn">Find Jobs</button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- IMPORTANT: Include the security guard script first -->
+    <script src="./script/auth.js"></script>
+
+    <!-- The script specific to this page -->
+    <script src="./script/home.js"></script>
+</body>
+
+</html>

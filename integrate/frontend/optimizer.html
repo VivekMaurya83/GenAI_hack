@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume & LinkedIn Optimizer - AI Career Coach</title>
+    <!-- Global styles for theme variables and basic resets -->
+    <link rel="stylesheet" href="temp.css">
+    <!-- Optimizer-specific styles for layout and components -->
+    <link rel="stylesheet" href="./style/optimizer.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="optimizer-page-layout">
+    <div class="container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1><i class="fas fa-magic"></i> Resume & LinkedIn Optimizer</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="nav-link"><i class="fas fa-arrow-left"></i> Home</a>
+                <a href="profile.html" class="nav-link"><i class="fas fa-user-circle"></i> Profile</a>
+                <button id="logoutButton" class="nav-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </nav>
+        </header>
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="card">
+            
+            <h2><i class="fas fa-upload"></i> Upload Your Resume</h2>
+            <p class="section-description">Upload your latest resume (PDF or DOCX) to get started with AI-powered optimization.</p>
+            <form id="upload-form">
+                <div class="form-group">
+                    <label for="resume_file">Select Resume File:</label>
+                    <input type="file" id="resume_file" accept=".pdf,.docx" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary-btn"><i class="fas fa-cloud-upload-alt"></i> Upload & Analyze</button>
+                </div>
+            </form>
+
+                        <div id="upload-error-message" class="status-message error hidden"></div>
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Analyzing your resume. This may take a moment...</p>
+            </div>
+
+            <!-- Refined: Resume Template Section -->
+            <div class="template-section">
+                <h3><i class="fas fa-file-invoice"></i> No Resume Yet? Start with a Free Template!</h3>
+                <p class="template-description">Select an editable Microsoft Word template below. Fill it out, then upload it above for AI optimization.</p>
+                
+                <div class="template-cards-grid">
+                    <!-- Template Card 1: Modern -->
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <!-- Placeholder for template image -->
+                            <img src="./assets/modern.png" alt="Modern Resume Template Preview">
+                        </div>
+                        <h4>Modern Style</h4>
+                        <p>Clean design with a professional yet contemporary feel. Ideal for tech and corporate roles.</p>
+                        <a href="./templates/Modern_resume.docx" download class="btn secondary-btn" target="_blank"><i class="fas fa-download"></i> Download DOCX</a>
+                    </div>
+
+                    <!-- Template Card 2: Professional -->
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <!-- Placeholder for template image -->
+                            <img src="./assets/professional.png" alt="Professional Resume Template Preview">
+                        </div>
+                        <h4>Professional</h4>
+                        <p>A timeless layout, highly readable and ATS-friendly. Perfect for traditional industries.</p>
+                        <a href="./templates/Professional_resume.docx" download class="btn secondary-btn" target="_blank"><i class="fas fa-download"></i> Download DOCX</a>
+                    </div>
+
+                    <!-- Template Card 3: Classic -->
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <!-- Placeholder for template image -->
+                            <img src="./assets/classic.png" alt="Classic Resume Template Preview">
+                        </div>
+                        <h4>Classic</h4>
+                        <p>Showcase your personality with a unique design. Best for creative fields like marketing or design.</p>
+                        <a href="./templates/Classic_resume.docx" download class="btn secondary-btn" target="_blank"><i class="fas fa-download"></i> Download DOCX</a>
+                    </div>
+
+                    <!-- Template Card 4: Creative -->
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <!-- Placeholder for template image -->
+                            <img src="./assets/basic.png" alt="Basic Resume Template Preview">
+                        </div>
+                        <h4>Simple & Basic</h4>
+                        <p>Sometimes simple and basic things can be valuable too.</p>
+                        <a href="./templates/Basic_resume.docx" download class="btn secondary-btn" target="_blank"><i class="fas fa-download"></i> Download DOCX</a>
+                    </div>
+                </div>
+            </div>
+            <!-- END Refined Template Section -->
+
+        </section>
+
+        <!-- Choice Section (Hidden initially) -->
+        <section id="choice-section" class="card hidden">
+            <h2><i class="fas fa-cogs"></i> What would you like to optimize?</h2>
+            <div class="feature-cards">
+                <div class="feature-card" id="show-resume-optimizer-card">
+                    <h3><i class="fas fa-file-alt"></i> Resume Sections</h3>
+                    <p>Get AI suggestions to improve specific sections of your resume like summary, experience, or skills.</p>
+                    <button class="btn primary-btn"><i class="fas fa-arrow-right"></i> Optimize Resume</button>
+                </div>
+                <div class="feature-card" id="show-linkedin-optimizer-card">
+                    <h3><i class="fab fa-linkedin"></i> LinkedIn Profile</h3>
+                    <p>Generate compelling headlines, "About" sections, and optimized experience descriptions for your LinkedIn profile.</p>
+                    <button class="btn primary-btn"><i class="fas fa-arrow-right"></i> Optimize LinkedIn</button>
+                </div>
+            </div>
+            <p class="mt-4 form-toggle-text"><a href="#" id="start-over-link"><i class="fas fa-sync-alt"></i> Upload a different resume</a></p>
+        </section>
+
+        <!-- Resume Optimizer Section (Hidden initially) -->
+        <section id="resume-optimizer-section" class="card hidden">
+            <h2><i class="fas fa-clipboard-list"></i> Optimize Resume Sections</h2>
+            <p class="section-description">Tell the AI which section you want to improve or provide a general request. The optimized resume will be downloaded as a DOCX.</p>
+            <form id="optimize-form-resume">
+                <div class="form-group">
+                    <label for="resume_user_request">Specific Section or General Request (Optional):</label>
+                    <textarea id="resume_user_request" rows="4" placeholder="e.g., 'Work experience: quantify achievements in my latest role', 'Summary: make it more impactful and concise', or 'Improve overall clarity'"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary-btn"><i class="fas fa-download"></i> Optimize & Download</button>
+                </div>
+            </form>
+            <div id="resume-optimize-error-message" class="status-message error hidden"></div>
+            <p class="mt-4 form-toggle-text"><a href="#" class="back-link"><i class="fas fa-chevron-left"></i> Back to Choices</a></p>
+        </section>
+
+        <!-- LinkedIn Optimizer Section (Hidden initially) -->
+        <section id="linkedin-optimizer-section" class="card hidden">
+            <h2><i class="fab fa-linkedin"></i> Optimize LinkedIn Profile</h2>
+            <p class="section-description">Generate AI-powered content specifically for your LinkedIn profile sections.</p>
+            <form id="optimize-form-linkedin">
+                <div class="form-group">
+                    <label for="linkedin_user_request">Specific Focus (Optional):</label>
+                    <textarea id="linkedin_user_request" rows="4" placeholder="e.g., 'Generate strong headlines and an About section', 'Highlight my key achievements for LinkedIn', or 'Optimize my current job description'"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary-btn"><i class="fas fa-sync-alt"></i> Generate Content</button>
+                </div>
+            </form>
+            <div id="linkedin-content">
+                <!-- Optimized LinkedIn content will appear here -->
+                <p class="text-medium">Your generated LinkedIn content will appear here.</p>
+            </div>
+            <div id="linkedin-optimize-error-message" class="status-message error hidden"></div>
+            <p class="mt-4 form-toggle-text"><a href="#" class="back-link"><i class="fas fa-chevron-left"></i> Back to Choices</a></p>
+        </section>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="./script/auth.js"></script>
+    <script src="./script/optimizer.js"></script>
+</body>
+</html>
