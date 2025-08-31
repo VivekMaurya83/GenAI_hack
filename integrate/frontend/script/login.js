@@ -2,7 +2,7 @@
 // Go to your Firebase project settings (gear icon) -> "General" tab.
 // Scroll down to "Your apps" and click the "</>" icon to get your web app config.
 const firebaseConfig = {
-    apiKey: "AIzaSyDtuYr4icwQf2HsvByrCZeqbEex28lL6GI",
+    apiKey: "",
     authDomain: "genaihack-240d7.firebaseapp.com",
     projectId: "genaihack-240d7",
     storageBucket: "genaihack-240d7.firebasestorage.app",
