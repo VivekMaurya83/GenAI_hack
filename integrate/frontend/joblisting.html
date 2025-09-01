@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Job Mapping</title> <!-- Title as per screenshot -->
+  <link rel="stylesheet" href="temp.css"> <!-- Global base styles -->
+  <link rel="stylesheet" href="./style/joblisting.css"> <!-- Dedicated job listing styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container job-listing-container">
+    <header class="page-header">
+      <h1 class="main-title-glow">Smart Job Mapping</h1> <!-- Added specific class for glow -->
+      <nav class="header-nav">
+          <a href="home.html" class="nav-link">Home</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+          <button id="logoutButton" class="nav-button">Logout</button>
+      </nav>
+    </header>
+
+    <div class="card search-panel">
+        <p class="tagline">Upload your resume to instantly match with top job opportunities.</p>
+        
+        <form id="job-search-form">
+            <div class="form-row input-and-file-row">
+                <div class="form-group file-upload-group">
+                    <!-- The input type="file" is now INSIDE the label, making the label's entire area clickable -->
+                    <label for="resumeUpload" class="custom-file-button">
+                        <i class="fas fa-file-pdf"></i> Choose a File
+                        <input type="file" id="resumeUpload" accept=".pdf" required> <!-- This input is now hidden via CSS -->
+                    </label>
+                    <span id="fileName" class="file-name">No file chosen</span>
+                </div>
+                
+                <div class="form-group location-input-group">
+                    <label for="locationInput" class="location-label">Location:</label>
+                    <input type="text" id="locationInput" placeholder="Pune" value="Pune" required>
+                </div>
+            </div>
+            
+            <div class="form-actions full-width-button">
+                <button type="submit" id="findJobsButton" class="btn find-jobs-btn">Find My Jobs</button>
+            </div>
+            <div id="job-search-status" class="status-message hidden"></div>
+        </form>
+    </div>
+
+    <!-- Loading spinner for job search -->
+    <div id="loading" class="card hidden">
+        <div class="spinner"></div>
+        <p class="loading-text">Analyzing your resume and fetching jobs...</p>
+    </div>
+    
+    <div id="results-container" class="card hidden">
+        <h2 class="results-heading">Extracted Skills:</h2>
+        <ul id="skills-list">
+            <!-- Skills will be dynamically loaded here -->
+        </ul>
+        
+        <h2 class="results-heading">Top 7 Recommended Jobs:</h2>
+        <p id="no-jobs-message" class="section-description hidden">
+            Oops! No suitable jobs found based on your resume and location.
+            Try: <br>
+            - Uploading a more detailed resume. <br>
+            - Expanding your job search location. <br>
+            - Refining your skills in your profile.
+        </p>
+        
+        <div id="jobs-list">
+            <!-- Job cards will be inserted here by JavaScript -->
+        </div>
+        <div class="form-actions">
+          <button id="startNewSearchButton" class="btn secondary-btn">Start New Search</button>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="./script/auth.js"></script>
+  <script src="./script/joblisting.js"></script>
+</body>
+</html>
