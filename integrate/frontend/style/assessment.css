@@ -1,0 +1,600 @@
+/* frontend/assessment.css */
+
+/* Overall page layout for the assessment */
+body.assessment-page-layout {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 3rem; /* Space at the bottom */
+}
+
+.assessment-page-layout .container {
+    max-width: 900px; /* Wider container for assessment content */
+    padding-top: 2rem; /* Space from the top */
+}
+
+/* Page Header (Consistent with other pages) */
+.page-header {
+    background-color: var(--card-bg-dark);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-dark);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.page-header h1 {
+    color: var(--primary-genai-color);
+    font-size: 2em;
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h1 i {
+    font-size: 0.9em;
+    color: var(--primary-genai-color);
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.header-nav .nav-link {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--secondary-genai-color);
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s, transform 0.1s ease-out;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav .nav-link:hover {
+    background-color: var(--secondary-genai-color);
+    color: var(--background-dark);
+    transform: translateY(-2px);
+}
+
+.header-nav .nav-button {
+    background-color: #E05252;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav .nav-button:hover {
+    background-color: #C0392B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Card Styling (inherits base from style.css, then refined here) */
+.card {
+    margin-bottom: 2rem; /* Space between cards */
+    text-align: left; /* Align text left within cards */
+}
+
+.card h2 {
+    color: var(--primary-genai-color);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 i {
+    font-size: 0.9em;
+    color: var(--primary-genai-color);
+}
+
+.section-description {
+    color: var(--text-subtle);
+    font-size: 0.95em;
+    margin-top: -0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Group styling (consistent) */
+.form-group {
+    margin-bottom: 1.5rem; /* Increased margin for better separation */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    color: var(--text-medium);
+    font-size: 1em; /* Slightly larger label text */
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+}
+
+input[type="text"],
+textarea,
+select { /* Styles applied to select as well */
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-stack);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus { /* Focus styles applied to select as well */
+    border-color: var(--primary-genai-color);
+    box-shadow: 0 0 0 2px rgba(0, 194, 84, 0.3);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-subtle);
+    opacity: 0.7;
+}
+
+.form-group small {
+    color: var(--text-subtle);
+    font-size: 0.85em;
+    margin-top: 0.5rem;
+    padding-left: 5px;
+}
+
+/* Form Actions (buttons) (consistent) */
+.form-actions {
+    margin-top: 2rem; /* Consistent margin */
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.form-actions .btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s ease-out;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-actions .btn.primary-btn {
+    background-color: var(--primary-genai-color);
+    color: var(--background-dark);
+}
+
+.form-actions .btn.primary-btn:hover {
+    background-color: #00A347;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn.secondary-btn {
+    background-color: transparent;
+    color: var(--text-medium);
+    border: 1px solid var(--border-dark);
+}
+
+.form-actions .btn.secondary-btn:hover {
+    background-color: var(--border-dark);
+    color: var(--text-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-actions .btn:disabled {
+    background-color: #505060;
+    color: var(--text-subtle);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* Status messages (consistent) */
+.status-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.status-message.error {
+    color: var(--error-red);
+    background-color: rgba(224, 82, 82, 0.2);
+    border: 1px solid var(--error-red);
+}
+
+.status-message.success {
+    color: var(--success-green);
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid var(--success-green);
+}
+
+/* Loading Spinner (consistent) */
+#loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    color: var(--text-medium);
+    font-size: 1.1em;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--primary-genai-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* --- Assessment Specific Sections --- */
+
+/* Question navigation and progress */
+.question-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    height: 10px;
+    background-color: var(--input-bg-dark);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-genai-color);
+    border-radius: 5px;
+    transition: width 0.3s ease-out;
+}
+
+#current-question-count {
+    color: var(--text-light);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Question display */
+.question-display {
+    margin-bottom: 2rem;
+}
+
+.question-display h3 {
+    color: var(--text-light);
+    font-size: 1.5em;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option-item {
+    background-color: var(--input-bg-dark);
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.option-item:hover {
+    background-color: #353555; /* Slightly lighter on hover */
+    border-color: var(--primary-genai-color);
+    box-shadow: 0 0 0 2px rgba(0, 194, 84, 0.2);
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+    appearance: none; /* Hide default radio/checkbox */
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-medium);
+    border-radius: 50%; /* For radio */
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0; /* Prevent shrinking */
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.option-item input[type="checkbox"] {
+    border-radius: 4px; /* Square for checkbox */
+}
+
+.option-item input[type="radio"]:checked,
+.option-item input[type="checkbox"]:checked {
+    border-color: var(--primary-genai-color);
+    background-color: var(--primary-genai-color);
+}
+
+.option-item input[type="radio"]:checked::after,
+.option-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--background-dark); /* Dark dot in center */
+    border-radius: 50%;
+}
+.option-item input[type="checkbox"]:checked::after {
+    /* Custom checkmark for checkbox */
+    width: 6px;
+    height: 12px;
+    border: solid var(--background-dark);
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg);
+    border-radius: 0;
+}
+
+.option-item label {
+    color: var(--text-light);
+    font-size: 1.05em;
+    cursor: pointer;
+    margin-bottom: 0; /* Override form-group label margin */
+}
+
+
+/* Short Answer/Code Editor */
+.code-editor-area {
+    font-family: 'Consolas', 'Monaco', monospace;
+    background-color: #101018; /* Even darker background for code */
+    border: 1px solid #4a4a6a;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #e0e0e0;
+    font-size: 0.95em;
+    min-height: 150px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    tab-size: 4;
+    overflow-x: auto;
+    resize: vertical;
+}
+
+/* Results Display */
+.results-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.result-stat-card {
+    background-color: var(--input-bg-dark);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-dark);
+    text-align: center;
+}
+
+.result-stat-card h3 {
+    color: var(--text-light);
+    font-size: 1.3em;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.result-stat-card p {
+    color: var(--primary-genai-color);
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+.result-stat-card p.text-normal {
+    color: var(--text-medium);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+
+#skill-breakdown-card {
+    grid-column: 1 / -1; /* Full width for the chart */
+    text-align: center;
+}
+#skill-breakdown-card .chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+#strengths-weaknesses-card {
+    padding: 2rem;
+}
+#strengths-weaknesses-card h3 {
+    justify-content: flex-start;
+}
+#strengths-weaknesses-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#strengths-weaknesses-card li {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid var(--border-dark);
+}
+#strengths-weaknesses-card li.strength {
+    border-left: 4px solid var(--success-green);
+    background-color: rgba(76, 175, 80, 0.1);
+}
+#strengths-weaknesses-card li.weakness {
+    border-left: 4px solid var(--error-red);
+    background-color: rgba(224, 82, 82, 0.1);
+}
+
+
+#recommendations-card {
+    grid-column: 1 / -1; /* Full width for recommendations */
+    text-align: left;
+}
+#recommendations-card h3 {
+    justify-content: flex-start;
+}
+#recommendations-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#recommendations-card li {
+    padding: 0.8rem 0;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+    color: var(--text-medium);
+}
+#recommendations-card li:last-child {
+    border-bottom: none;
+}
+#recommendations-card a {
+    color: var(--secondary-genai-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+#recommendations-card a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .assessment-page-layout .container {
+        padding: 1.5rem;
+    }
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+    .page-header h1 {
+        font-size: 1.8em;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.8rem;
+    }
+    .header-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    .header-nav .nav-link,
+    .header-nav .nav-button {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+    .form-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .question-nav {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .progress-bar-container {
+        width: 100%;
+        margin: 0;
+    }
+    .question-nav .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .results-summary-grid {
+        grid-template-columns: 1fr;
+    }
+    #skill-breakdown-card .chart-container {
+        height: 300px;
+    }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment - AI Career Coach</title>
+    <!-- Global styles for theme variables and basic resets -->
+    <link rel="stylesheet" href="temp.css">
+    <!-- Page-specific styles for layout and components -->
+    <link rel="stylesheet" href="./style/assessment.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="assessment-page-layout">
+    <div class="container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1><i class="fas fa-chart-line"></i> Skill Assessment</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="nav-link"><i class="fas fa-arrow-left"></i> Home</a>
+                <a href="profile.html" class="nav-link"><i class="fas fa-user-circle"></i> Profile</a>
+                <button id="logoutButton" class="nav-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </nav>
+        </header>
+
+        <!-- Section 1: Assessment Setup (Visible by default) -->
+        <section id="assessment-setup-section" class="card">
+            <h2><i class="fas fa-cogs"></i> Set Up Your Assessment</h2>
+            <p class="section-description">Choose an assessment type and target role. We'll pre-fill skills, which you can customize.</p>
+            <form id="assessment-setup-form">
+                <div class="form-group">
+                    <label for="assessment-type-select">Select Assessment Type:</label>
+                    <select id="assessment-type-select" required>
+                        <option value="">-- Choose a type --</option>
+                        <option value="software_developer">Software Developer</option>
+                        <option value="data_scientist">Data Scientist</option>
+                        <option value="cybersecurity_analyst">Cybersecurity Analyst</option>
+                        <option value="cloud_engineer">Cloud Engineer</option>
+                        <option value="custom">Custom (Define your own skills)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="target-role">Specific Role (e.g., Junior, Senior, Specialist):</label>
+                    <input type="text" id="target-role" placeholder="e.g., Junior Software Engineer, Lead Data Scientist">
+                    <small>This refines the difficulty and focus of the questions.</small>
+                </div>
+                <div class="form-group">
+                    <label for="skills-to-assess">Skills to Assess (comma-separated, editable):</label>
+                    <textarea id="skills-to-assess" rows="4" placeholder="e.g., Python, SQL, Data Analysis, Machine Learning" required></textarea>
+                    <small>These skills will be used to generate your assessment questions. You can edit this list.</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="start-assessment-btn" class="btn primary-btn"><i class="fas fa-play-circle"></i> Start Assessment</button>
+                </div>
+            </form>
+            <div id="setup-status-message" class="status-message hidden"></div>
+        </section>
+
+        <!-- Section 2: Active Assessment Session (Hidden by default) -->
+        <section id="active-assessment-section" class="card hidden">
+            <div class="question-nav">
+                <button id="prev-question-btn" class="btn secondary-btn" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <span id="current-question-count">Question 1 of N</span>
+                <button id="next-question-btn" class="btn primary-btn"><i class="fas fa-arrow-right"></i> Next</button>
+            </div>
+            
+            <div class="question-display">
+                <h3 id="question-text">Loading question...</h3>
+                <div id="question-options" class="options-group">
+                    <!-- Multiple choice/radio options will be injected here -->
+                </div>
+                <textarea id="question-short-answer" class="code-editor-area hidden" rows="8" placeholder="Type your answer here..." style="margin-top: 1.5rem;"></textarea>
+            </div>
+
+            <div id="assessment-status-message" class="status-message hidden"></div>
+        </section>
+
+        <!-- Section 3: Assessment Results (Hidden by default) -->
+        <section id="assessment-results-section" class="card hidden">
+            <h2><i class="fas fa-trophy"></i> Your Skill Assessment Results</h2>
+            <p class="section-description">Here's a detailed breakdown of your performance and personalized recommendations.</p>
+
+            <div class="results-summary-grid">
+                <div class="result-stat-card">
+                    <h3><i class="fas fa-percentage"></i> Overall Score</h3>
+                    <p id="overall-score">--%</p>
+                </div>
+                <div class="result-stat-card">
+                    <h3><i class="fas fa-check-circle"></i> Skills Mastered</h3>
+                    <p id="skills-mastered">0</p>
+                </div>
+                <div class="result-stat-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Areas to Improve</h3>
+                    <p id="areas-to-improve">0</p>
+                </div>
+            </div>
+
+            <div id="skill-breakdown-card" class="card">
+                <h3><i class="fas fa-chart-area"></i> Skill Proficiency Breakdown</h3>
+                <div class="chart-container">
+                    <canvas id="skill-breakdown-chart"></canvas>
+                </div>
+            </div>
+
+            <div id="strengths-weaknesses-card" class="card">
+                <h3><i class="fas fa-thumbs-up"></i> Strengths & <i class="fas fa-thumbs-down"></i> Weaknesses</h3>
+                <p class="section-description">Based on your performance:</p>
+                <ul id="strengths-list">
+                    <li class="strength"><i class="fas fa-plus-circle"></i> Demonstrated strong understanding of Python syntax.</li>
+                </ul>
+                <ul id="weaknesses-list">
+                    <li class="weakness"><i class="fas fa-minus-circle"></i> Needs improvement in SQL query optimization.</li>
+                </ul>
+            </div>
+
+            <div id="recommendations-card" class="card">
+                <h3><i class="fas fa-lightbulb"></i> Personalized Recommendations</h3>
+                <p class="section-description">Here's what you can do to further enhance your skills:</p>
+                <ul id="recommendations-list">
+                    <li>Consider taking an advanced course on <a href="#" target="_blank">SQL performance tuning</a>.</li>
+                    <li>Work on a small project involving <a href="#" target="_blank">building a machine learning model</a>.</li>
+                    <li>Review documentation on <a href="#" target="_blank">Python data structures</a>.</li>
+                </ul>
+            </div>
+
+            <div class="form-actions">
+                <button id="retake-assessment-btn" class="btn secondary-btn"><i class="fas fa-redo-alt"></i> Retake Assessment</button>
+                <a href="roadmap.html" class="btn primary-btn"><i class="fas fa-route"></i> Update My Roadmap</a>
+            </div>
+            <div id="results-status-message" class="status-message hidden"></div>
+        </section>
+
+        <!-- Global Loading Spinner -->
+        <div id="loading" class="hidden"><div class="spinner"></div><p>Generating your assessment...</p></div>
+
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="./script/auth.js"></script>
+    <script src="./script/assessment.js"></script>
+</body>
+</html>

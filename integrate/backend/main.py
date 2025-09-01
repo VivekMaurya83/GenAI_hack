@@ -28,7 +28,7 @@ else:
 
 # Now import routers. They will use their own sys.path adjustments and import from dependencies.py.
 # Use direct imports for folders at the same level as main.py
-from routers import auth, resume, roadmap, user, joblisting
+from routers import auth, resume, roadmap, user, joblisting, assessment
 
 # =========================
 # FastAPI Application Setup
@@ -56,6 +56,7 @@ app.include_router(resume.router, prefix="/api/resume", tags=["Resume and Optimi
 app.include_router(roadmap.router, prefix="/api/roadmap", tags=["Career Roadmap"])
 app.include_router(user.router, prefix="/api/user", tags=["User Profile"])
 app.include_router(joblisting.router, prefix="/api/jobs", tags=["Job Listing and Matching"])
+app.include_router(assessment.router, prefix="/api/assessment", tags=["Skill Assessment"])
 
 @app.get("/")
 async def root():

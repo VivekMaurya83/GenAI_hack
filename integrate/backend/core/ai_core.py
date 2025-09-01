@@ -2,7 +2,7 @@ import os
 import sys
 import json
 import re
-from typing import Optional, Tuple, List, Dict, Any
+from typing import Optional, Tuple, List, Dict, Any, Union
 
 # Required libraries (ensure they are installed via requirements.txt)
 import fitz  # PyMuPDF
@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 from docx import Document
 from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-# Removed firebase_admin imports as they are used in db_core, not ai_core
 
 # =========================
 # Setup
@@ -29,6 +28,38 @@ def setup_api():
         sys.exit(1)
 
 MODEL_NAME = setup_api()
+
+# =========================
+# JSON Schema Constants
+# =========================
+
+ASSESSMENT_QUESTIONS_SCHEMA = """
+[
+  {
+    "question_id": "string",
+    "question_text": "string",
+    "question_type": "single_choice" | "multiple_choice" | "short_answer" | "coding_challenge",
+    "options": ["string option 1", "string option 2", "string option 3", "string option 4"],
+    "correct_answer_keys": ["string option 1"]
+  }
+]
+"""
+
+ASSESSMENT_EVALUATION_SCHEMA = """
+{
+  "overall_score": 75,
+  "skills_mastered": 3,
+  "areas_to_improve": 2,
+  "skill_scores": { "Python": 80, "SQL": 60, "Data Analysis": 75 },
+  "strengths": ["Demonstrated strong foundational knowledge in Python.", "Understood basic SQL queries."],
+  "weaknesses": ["Struggled with complex data manipulation in SQL.", "Limited understanding of advanced data analysis concepts."],
+  "recommendations": [
+    "Focus on SQL subqueries and window functions for data manipulation.",
+    "Practice implementing machine learning algorithms from scratch.",
+    "Explore advanced data visualization techniques and tools."
+  ]
+}
+"""
 
 # =========================
 # Helper Functions
@@ -79,7 +110,7 @@ def parse_user_optimization_input(inp: str) -> Tuple[Optional[str], Optional[str
         return val, None
     return None, val
 
-def _stringify_list_content(content: Any) -> str: # Keep this here as save_resume_json_to_docx also uses it
+def _stringify_list_content(content: Any) -> str:
     """Safely converts a list of strings or dicts into a single newline-separated string."""
     if not isinstance(content, list): return str(content or "")
     string_parts = []
@@ -524,3 +555,140 @@ def get_chatbot_response(query: str, history: List[Dict[str, str]], career_plan:
         return {"response": response.text}
     except Exception as e:
         print(f"An error occurred in the chat endpoint: {e}"); return None
+
+def generate_assessment_questions(
+    assessment_type: str,
+    skills: List[str],
+    target_role: Optional[str] = None,
+    num_questions: int = 5,
+    user_id: Optional[str] = None
+) -> Optional[Dict[str, Any]]:
+    """
+    Generates a set of assessment questions based on selected skills and target role.
+    Uses Gemini Flash.
+    """
+    
+    skills_str = ", ".join(skills)
+    role_context = f" for a {target_role}" if target_role else ""
+
+    difficulty_hint = "medium difficulty"
+    if "junior" in (_norm(target_role).lower() or ""):
+        difficulty_hint = "beginner to medium difficulty"
+    elif "senior" in (_norm(target_role).lower() or "") or "lead" in (_norm(target_role).lower() or ""):
+        difficulty_hint = "medium to advanced difficulty"
+
+
+    prompt = f"""
+    You are an expert technical interviewer and AI assessment designer.
+    Your task is to generate a concise, focused skill assessment with exactly {num_questions} questions.
+    The assessment should cover the following skills: **{skills_str}**.
+    The target context is {assessment_type.replace('_', ' ').title()} role{role_context}, at a {difficulty_hint} level.
+
+    **Instructions for Question Generation:**
+    1.  Generate a mix of question types:
+        -   **Single-choice (radio buttons):** ~50% of questions. Provide 4 distinct options.
+        -   **Multiple-choice (checkboxes):** ~20% of questions. Provide 4 distinct options, clearly indicating ALL correct answers.
+        -   **Short-answer:** ~20% of questions. Requires a concise text response.
+        -   **Coding challenge:** ~10% of questions. Provide a clear problem statement and expected output/logic. (If this is too complex for 1.5-flash to reliably generate, favor more short-answer).
+    2.  Ensure questions cover both theoretical understanding and practical application of the skills.
+    3.  Assign a unique `question_id` (e.g., "q1", "q2") to each question.
+    4.  For each multiple/single choice question, you MUST provide the `correct_answer_keys` (a list of option values that are correct). This is CRITICAL for automated grading.
+    
+    **JSON Output Schema (List of Question Objects):**
+{ASSESSMENT_QUESTIONS_SCHEMA.strip()}
+    **Critical Rules:**
+    - Your final output MUST be a JSON array containing exactly {num_questions} question objects.
+    - DO NOT include any introductory or concluding text outside the JSON.
+    - Ensure `correct_answer_keys` is always a LIST, even if only one answer.
+    """
+
+    model = genai.GenerativeModel(MODEL_NAME)
+    try:
+        safety_settings = {'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE','HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE','HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE','HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE'}
+        response = model.generate_content(prompt, safety_settings=safety_settings)
+        questions = _safe_json_loads(response.text, fallback=None)
+        
+        if not questions or not isinstance(questions, list):
+            print("\n--- ERROR: GEMINI FLASH FAILED TO GENERATE VALID ASSESSMENT QUESTIONS ---")
+            print("API Response Text:", response.text)
+            try: print("API Prompt Feedback:", response.prompt_feedback)
+            except ValueError: pass
+            print("----------------------------------------------------------------------\n")
+            return None
+        
+        return {"questions": questions}
+
+    except Exception as e:
+        print(f"Error during AI question generation with Gemini Flash: {e}")
+        return None
+
+
+def evaluate_assessment_answers(
+    user_id: str,
+    submitted_answers: List[Dict[str, Any]],
+    # original_questions: List[Dict[str, Any]] = None
+) -> Optional[Dict[str, Any]]:
+    """
+    Evaluates user's assessment answers using Gemini Flash and provides structured results.
+    """
+
+    answers_summary = []
+    for ans in submitted_answers:
+        q_id = ans.get("question_id", "N/A")
+        user_response = ans.get("answer")
+        
+        if isinstance(user_response, list):
+            user_response_str = ", ".join(user_response)
+        elif user_response is None:
+            user_response_str = "No answer provided"
+        else:
+            user_response_str = str(user_response)
+        
+        answers_summary.append(f"Question ID: {q_id}\nUser Answer: ```{user_response_str}```\n---")
+
+    answers_text = "\n".join(answers_summary)
+
+    prompt = f"""
+    You are an expert technical interviewer and AI grader.
+    Your task is to evaluate a user's submitted answers for a skill assessment.
+    Provide a comprehensive, structured evaluation based on the answers provided.
+
+    **Instructions for Evaluation:**
+    1.  **Calculate Overall Score:** Assign an overall percentage score (0-100%) for the assessment.
+    2.  **Identify Skills Mastered/Areas to Improve (Counts):** Based on the questions and answers, estimate how many distinct skills were demonstrated proficiently and how many need significant improvement.
+    3.  **List Strengths:** Provide 2-3 specific bullet points highlighting what the user did well.
+    4.  **List Weaknesses:** Provide 2-3 specific bullet points highlighting areas where the user struggled or demonstrated gaps.
+    5.  **Personalized Recommendations:** Provide 2-3 actionable, general recommendations for improvement. These should be text-based recommendations, not URLs.
+
+    **User's Submitted Answers:**
+    {'-'*30}
+    {answers_text}
+    {'-'*30}
+
+    **JSON Output Schema:**
+{ASSESSMENT_EVALUATION_SCHEMA.strip()}
+    **Critical Rules:**
+    - Your final output MUST be a single, valid JSON object following the schema.
+    - DO NOT include any introductory or concluding text outside the JSON.
+    - The `skill_scores` should be an object mapping skill names (e.g., Python, SQL) to a proficiency score (0-100). Infer these skills from the context of the assessment.
+    """
+
+    model = genai.GenerativeModel(MODEL_NAME)
+    try:
+        safety_settings = {'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE','HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE','HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE','HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE'}
+        response = model.generate_content(prompt, safety_settings=safety_settings)
+        results = _safe_json_loads(response.text, fallback=None)
+        
+        if not results or not isinstance(results, dict):
+            print("\n--- ERROR: GEMINI FLASH FAILED TO EVALUATE ASSESSMENT ANSWERS ---")
+            print("API Response Text:", response.text)
+            try: print("API Prompt Feedback:", response.prompt_feedback)
+            except ValueError: pass
+            print("-------------------------------------------------------------------\n")
+            return None
+        
+        return results
+
+    except Exception as e:
+        print(f"Error during AI assessment evaluation with Gemini Flash: {e}")
+        return None
