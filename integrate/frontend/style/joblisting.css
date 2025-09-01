@@ -1,0 +1,589 @@
+/* frontend/joblisting.css */
+
+/* --- GenAI Theme Variables for Joblisting (Overriding/Defining for precise match) --- */
+:root {
+    /* Colors directly from image analysis */
+    --joblisting-bg: #1A1230; /* Main dark purple-blue background */
+    --joblisting-card-bg: #2B2040; /* Card background (darker purple) */
+    --joblisting-text-light: #E8E2F1; /* Off-white for main text (H1, job titles) */
+    --joblisting-text-medium: #C0BDC7; /* Muted text (tagline, company, location) */
+    --joblisting-text-subtle: #A098B0; /* Very subtle text/placeholders (file name, reason) */
+    --joblisting-border: #4A3A60; /* Darker border for depth */
+    --joblisting-input-bg: #3B2E50; /* Input field background */
+
+    /* Gradients from the image */
+    --btn-gradient-upload: linear-gradient(90deg, #EC4899, #8B5CF6); /* Pink to Purple */
+    --btn-gradient-find: linear-gradient(90deg, #3B82F6, #6D28D9); /* Blue to Darker Purple */
+
+    /* Highlight/Accent Colors */
+    --joblisting-highlight-skill: #6C5CE7; /* A vibrant purple for skills (e.g. C++, JavaScript) */
+    --joblisting-highlight-rating: #EC4899; /* Pinkish for rating */
+    --joblisting-job-border-left: #EC4899; /* Pinkish accent on job cards */
+    --joblisting-job-link-hover: #8B5CF6; /* Purple hover for job links */
+
+    /* Shadows for depth and glow */
+    --joblisting-shadow-glow-h1: 0 0 15px rgba(92, 107, 192, 0.7), 0 0 25px rgba(139, 92, 246, 0.5); /* Glowing effect for H1 */
+    --joblisting-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deeper card shadow */
+    --joblisting-button-shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --joblisting-button-shadow-strong: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+    --font-stack: 'Poppins', sans-serif; /* As per your initial joblisting.css */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+}
+
+/* --- Base Overrides (from global style.css) --- */
+body {
+    background-color: var(--joblisting-bg);
+    color: var(--joblisting-text-light);
+    font-family: var(--font-stack);
+    padding: 2rem 1rem; /* Adjust padding for visual match */
+    text-align: center; /* Default text alignment for the page */
+}
+
+/* Ensure global links and buttons get a base from global.css but can be overridden */
+.container.job-listing-container {
+    max-width: 900px; /* Max width to match screenshot's content area */
+    margin: 2rem auto; /* Center with vertical margin */
+    padding: 0;
+    gap: 2.5rem; /* Increased gap between main sections */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center flex items horizontally */
+}
+
+/* Page Header */
+.page-header {
+    background-color: transparent;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 1rem 0;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.main-title-glow { /* Specific class for the glowing H1 */
+    font-weight: 700;
+    font-size: 2.8em;
+    color: var(--joblisting-text-light);
+    text-shadow: var(--joblisting-shadow-glow-h1); /* Applying the defined glow */
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.page-header .header-nav {
+    position: static;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+/* Style for Home, Profile, Logout buttons/links */
+.page-header .nav-link, .page-header .nav-button {
+    background-color: var(--joblisting-input-bg); /* Use a consistent dark background */
+    border: 1px solid var(--joblisting-border);
+    color: var(--joblisting-text-medium);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: var(--border-radius-md);
+    text-decoration: none; /* Remove underline */
+}
+.page-header .nav-link:hover, .page-header .nav-button:hover {
+    background-color: #504065; /* Darker purple on hover */
+    color: var(--joblisting-text-light);
+    text-decoration: none; /* No underline on hover */
+}
+
+
+/* Tagline below main H1 */
+.tagline {
+    color: var(--joblisting-text-medium);
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+
+/* Search Panel Card */
+.card.search-panel {
+    background-color: var(--joblisting-card-bg);
+    border: 1px solid var(--joblisting-border);
+    box-shadow: var(--joblisting-card-shadow);
+    padding: 3rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.search-panel h2, .search-panel .section-description {
+    display: none; /* Hide these elements as they are not in the screenshot */
+}
+
+
+#job-search-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.form-row.input-and-file-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem; /* Adjust gap to match image */
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem; /* Space before main button */
+}
+
+/* Custom File Input Styling */
+.form-group.file-upload-group {
+    /* The label (custom-file-button) and span (file-name) are direct children of this group */
+    display: flex; /* Make it a flex container to align items */
+    align-items: center;
+    flex: 1 1 auto;
+    max-width: 45%; /* Match relative size in image */
+    margin-bottom: 0;
+    text-align: left;
+    height: 48px; /* Consistent height */
+    /* NO border/background on this parent group. Children will have them */
+}
+.form-group.file-upload-group input[type="file"] {
+    display: none; /* HIDDEN: This is the native input */
+}
+
+
+.custom-file-button { /* Label that acts as a button */
+    background: var(--btn-gradient-upload); /* Pink to Purple gradient */
+    color: white;
+    padding: 0.7rem 1rem; /* Adjust padding for visual match */
+    border-radius: var(--border-radius-md); /* Apply border-radius to button itself */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-right: 0; /* No margin right, will be next to fileName */
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    box-shadow: var(--joblisting-button-shadow-light);
+    font-size: 0.95em;
+    height: 100%; /* Make button take full height of file-upload-group */
+    border-top-right-radius: 0; /* Sharp corner to meet file-name */
+    border-bottom-right-radius: 0;
+    white-space: nowrap; /* Prevent text wrap */
+    border: 1px solid transparent; /* Subtle border for consistency with text part */
+    border-right: none; /* No right border to merge with file-name span */
+}
+.custom-file-button:hover {
+    opacity: 0.9;
+    box-shadow: var(--joblisting-button-shadow-strong);
+    transform: translateY(-2px);
+}
+.custom-file-button .fas {
+    margin-right: 8px;
+}
+
+.file-name {
+    flex-grow: 1;
+    color: var(--joblisting-text-subtle);
+    font-style: italic;
+    font-size: 0.95em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.7rem 1rem; /* Padding to align with button text */
+    text-align: left;
+    background-color: var(--joblisting-input-bg); /* Match input background */
+    border: 1px solid var(--joblisting-border); /* Border for this section */
+    border-top-left-radius: 0; /* Sharp corner to meet custom-file-button */
+    border-bottom-left-radius: 0;
+    border-radius: var(--border-radius-md); /* Rounded right corners */
+    height: 100%;
+    display: flex; /* Flex to vertically center text */
+    align-items: center;
+}
+
+
+.form-group.location-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 auto;
+    max-width: 45%;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    text-align: left;
+    height: 48px;
+    background-color: var(--joblisting-input-bg);
+    border: 1px solid var(--joblisting-border);
+    border-radius: var(--border-radius-md);
+    padding: 0 10px;
+}
+.form-group.location-input-group:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.3);
+    outline: none;
+}
+
+
+.location-label {
+    color: var(--joblisting-text-medium);
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 0.95em;
+}
+
+.location-input-group input[type="text"] {
+    flex-grow: 1;
+    width: auto;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: none;
+    color: var(--joblisting-text-light);
+    padding: 0;
+    height: auto;
+}
+.location-input-group input[type="text"]::placeholder {
+    color: var(--joblisting-text-subtle);
+    opacity: 0.7;
+}
+.location-input-group input[type="text"]:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+
+.form-actions.full-width-button {
+    text-align: center;
+    margin-top: 2rem;
+    border-top: none;
+    padding-top: 0;
+}
+
+.btn.find-jobs-btn { /* Specific styling for the main button */
+    background: var(--btn-gradient-find);
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: var(--border-radius-lg);
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: var(--joblisting-button-shadow-light);
+    width: 60%;
+    max-width: 350px;
+    margin: 0 auto;
+    display: block;
+    letter-spacing: 0.03em;
+}
+.btn.find-jobs-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--joblisting-button-shadow-strong);
+    opacity: 0.95;
+}
+
+
+/* Loading Spinner (re-themed) */
+#loading {
+    background-color: var(--joblisting-card-bg);
+    border: 1px solid var(--joblisting-border);
+    box-shadow: var(--joblisting-card-shadow);
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+}
+#loading p.loading-text {
+    color: var(--joblisting-text-medium);
+    margin-top: 1rem;
+    font-size: 1.1em;
+}
+
+
+/* Results Container */
+#results-container {
+    background-color: var(--joblisting-card-bg);
+    border: 1px solid var(--joblisting-border);
+    box-shadow: var(--joblisting-card-shadow);
+    padding: 2.5rem 3rem;
+    border-radius: var(--border-radius-lg);
+    text-align: left;
+    width: 100%;
+}
+
+#results-container h2.results-heading {
+    color: var(--joblisting-text-light);
+    font-size: 2em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--joblisting-border);
+    padding-bottom: 0.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#no-jobs-message {
+    border: 1px dashed var(--joblisting-border);
+    background-color: var(--joblisting-input-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-md);
+    color: var(--joblisting-text-medium);
+    text-align: center;
+    line-height: 1.8;
+}
+#no-jobs-message br {
+    margin-bottom: 0.5em;
+}
+
+
+.skills-summary {
+    margin-bottom: 2rem;
+}
+
+.skills-summary h3 {
+    color: var(--joblisting-text-light);
+    border-bottom: 1px solid var(--joblisting-border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+}
+.skills-summary h3::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f0a1";
+    font-weight: 900;
+    color: var(--joblisting-highlight-skill);
+    font-size: 1em;
+}
+
+
+#skills-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#skills-list li {
+    background-color: rgba(108, 92, 231, 0.2);
+    color: #6C5CE7;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border: 1px solid rgba(108, 92, 231, 0.5);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+#skills-list li:hover {
+    transform: translateY(-2px);
+    background-color: rgba(108, 92, 231, 0.35);
+}
+
+.no-data-message {
+    font-style: italic;
+    color: var(--joblisting-text-subtle);
+    padding: 8px 15px;
+    border: 1px dashed var(--joblisting-border);
+    border-radius: var(--border-radius-md);
+    background-color: var(--joblisting-input-bg);
+    text-align: center;
+}
+
+
+/* Job Cards */
+#jobs-list {
+    margin-top: 2rem;
+}
+#jobs-list .job-card {
+    background-color: var(--joblisting-input-bg);
+    padding: 1.8rem;
+    margin: 1.2rem auto;
+    border-radius: var(--border-radius-lg);
+    border-left: 5px solid var(--joblisting-job-border-left);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 90%;
+    max-width: 600px;
+}
+
+#jobs-list .job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(236, 72, 153, 0.2);
+}
+
+#jobs-list .job-card h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.6em;
+    color: var(--joblisting-text-light);
+}
+#jobs-list .job-card h3 a {
+    color: var(--joblisting-text-light);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+#jobs-list .job-card h3 a:hover {
+    color: var(--joblisting-job-link-hover);
+    text-decoration: underline;
+}
+
+#jobs-list .job-card p {
+    color: var(--joblisting-text-medium);
+    margin: 0.3rem 0;
+    font-size: 0.95em;
+}
+
+#jobs-list .job-card p strong {
+    color: var(--joblisting-text-light);
+}
+
+#jobs-list .job-card .tag {
+    background-color: rgba(92, 107, 192, 0.2);
+    color: var(--joblisting-highlight-skill);
+    padding: 0.3em 0.8em;
+    border-radius: 15px;
+    font-size: 0.8em;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid rgba(92, 107, 192, 0.5);
+}
+
+#jobs-list .job-card .rating {
+    font-weight: 700;
+    color: var(--joblisting-highlight-rating);
+    font-size: 1.3em;
+    margin-top: 0.8rem;
+    display: inline-block;
+}
+
+#jobs-list .job-card .reason {
+    font-style: italic;
+    color: var(--joblisting-text-subtle);
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 12px;
+    margin-top: 1.2rem;
+    font-size: 0.9em;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: var(--border-radius-md);
+    padding: 10px 10px 10px 15px;
+}
+
+#jobs-list .job-card .btn.secondary-btn {
+    margin-top: 1.8rem;
+    align-self: flex-start;
+    width: auto;
+    padding: 0.8rem 1.8rem;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+}
+#jobs-list .job-card .btn.secondary-btn:hover {
+    background-color: #0069d9;
+    border-color: #0069d9;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container.job-listing-container {
+        padding: 0 1rem;
+    }
+    .card.search-panel, #results-container.card {
+        padding: 1.5rem;
+    }
+    .main-title-glow {
+        font-size: 2.2em;
+    }
+    .tagline {
+        font-size: 1em;
+    }
+    .page-header .header-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        width: 100%;
+    }
+    .page-header .nav-link, .page-header .nav-button {
+        width: 100%;
+        text-align: center;
+    }
+    .form-row.input-and-file-row {
+        flex-direction: column;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .form-group.file-upload-group, .form-group.location-input-group {
+        max-width: 100%;
+        flex-basis: 100%;
+        width: 100%;
+        height: auto;
+    }
+    .custom-file-input-wrapper { /* Keep custom button and filename in a row on small, but allow flex-wrap if needed */
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px;
+        align-items: center; /* Center items in row */
+        justify-content: center;
+    }
+    .custom-file-button {
+        width: auto; /* Allow button to shrink */
+        flex-grow: 1; /* Allow it to grow */
+        margin-right: 5px;
+        margin-bottom: 0;
+        border-radius: var(--border-radius-md); /* Full radius for button on wrap */
+        border-top-right-radius: var(--border-radius-md); /* Reset */
+        border-bottom-right-radius: var(--border-radius-md); /* Reset */
+    }
+    .file-name {
+        padding-left: 5px;
+        width: auto;
+        text-align: left;
+        flex-grow: 1;
+        border-radius: var(--border-radius-md); /* Full radius for filename on wrap */
+        border: 1px solid var(--joblisting-border); /* Give it a border */
+        border-left: none; /* No left border if stacked */
+    }
+    .location-input-group {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-start;
+    }
+    .location-input-group input[type="text"] {
+        flex-grow: 1;
+        width: auto;
+    }
+    .btn.find-jobs-btn {
+        width: 100%;
+        max-width: none;
+    }
+    .skills-summary h3 {
+        justify-content: center;
+        text-align: center;
+    }
+    #skills-list {
+        justify-content: center;
+    }
+    #jobs-list .job-card {
+        width: 100%;
+        max-width: none;
+    }
+    #jobs-list .job-card .btn.secondary-btn {
+        align-self: stretch;
+    }
+}
