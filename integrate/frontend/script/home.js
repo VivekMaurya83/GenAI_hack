@@ -46,5 +46,5 @@ document.getElementById('assessment-card').addEventListener('click', () => {
 });
 
 document.getElementById('jobs-card').addEventListener('click', () => {
-    window.location.href = '/jobs.html'; // Assuming you'll create this page
+    window.location.href = '/joblisting.html'; // Assuming you'll create this page
 });
