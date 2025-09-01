@@ -89,6 +89,14 @@ This separation of concerns allows for independent development, testing, and dep
 
 ## 3. Running the Application
 
+
+.env file-
+
+GOOGLE_API_KEY=""
+
+ADZUNA_APP_ID=""   # <-- Replace with your Adzuna App ID  
+ADZUNA_APP_KEY="" # <-- Replace with your Adzuna App Key
+
 The application requires **two processes running in separate terminals**: backend and frontend.
 
 ### Step 1: Start the Backend Server
