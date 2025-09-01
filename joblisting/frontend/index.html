@@ -1,0 +1,70 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Job Mapping</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Job Mapping</h1>
+    <p style="color: #9ca3af; margin-top: -15px; margin-bottom: 30px;">
+      Upload your resume to instantly match with top job opportunities.
+    </p>
+    <input type="file" id="resumeUpload" accept=".pdf" onchange="updateFileName()">
+    <label for="resumeUpload" class="upload-label">Choose a File</label>
+    <span id="fileName">No file selected</span>
+    <br><br>
+    
+    <button onclick="uploadResume()">Find My Jobs</button>
+    
+    <div id="results-container" style="display: none;">
+        <h2>Extracted Skills:</h2>
+        <ul id="skills"></ul>
+        <h2>Top 7 Recommended Jobs:</h2>
+        <div id="jobs"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Job Mapping</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Job Mapping</h1>
+    <p style="color: #9ca3af; margin-top: -15px; margin-bottom: 30px;">
+      Upload your resume to instantly match with top job opportunities.
+    </p>
+
+    <!-- Styled file input -->
+    <input type="file" id="resumeUpload" accept=".pdf" onchange="updateFileName()">
+    <label for="resumeUpload" class="upload-label">Choose a File</label>
+    <span id="fileName">No file selected</span>
+    <br><br>
+    
+    <!-- NEW: Location Input Field -->
+    <label for="locationInput" class="location-label">Location:</label>
+    <input type="text" id="locationInput" placeholder="Enter Country or City (e.g., USA)">
+    
+    <button onclick="uploadResume()">Find My Jobs</button>
+    
+    <div id="results-container" style="display: none;">
+        <h2>Extracted Skills:</h2>
+        <ul id="skills"></ul>
+        <h2>Top 7 Recommended Jobs:</h2>
+        <div id="jobs"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

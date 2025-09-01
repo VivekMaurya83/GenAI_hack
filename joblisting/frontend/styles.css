@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text for readability */
+  text-align: center;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #1e1e1e; /* Slightly lighter dark for the container */
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 2.5em;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.5), 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+h2 {
+    font-weight: 400;
+    color: #c7d2fe; /* A soft blue for subheadings */
+    border-bottom: 1px solid #4a4a4a;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.upload-label {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(90deg, #8B5CF6, #EC4899); /* Purple to Red gradient */
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.upload-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.25);
+}
+
+#fileName {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* --- NEW STYLES for Location Input --- */
+.location-label {
+    color: #9ca3af;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    width: 50%;
+    padding: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid #4a4a4a;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 25px; /* Add space before the button */
+    box-sizing: border-box; /* Important for consistent sizing */
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #8B5CF6;
+}
+/* --- END NEW STYLES --- */
+
+
+button {
+  background: linear-gradient(90deg, #3B82F6, #6D28D9); /* Blue to Purple gradient */
+  border: none;
+  padding: 12px 30px;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+}
+
+#skills {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+#skills li {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.job-card {
+  background: #2a2a2a;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 12px;
+  text-align: left;
+  border-left: 5px solid #8B5CF6; /* Purple accent */
+  transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+}
+
+.job-card h3 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.job-card p {
+    margin: 8px 0;
+    color: #b0b0b0;
+    font-size: 0.95em;
+}
+
+.job-card p b {
+    color: #e0e0e0;
+}
+
+.job-card .reason {
+    font-style: italic;
+    color: #a5b4fc;
+    border-left: 3px solid #6D28D9;
+    padding-left: 10px;
+    margin-top: 15px;
+}
+
+.job-card .rating {
+    font-weight: 600;
+    color: #EC4899; /* Red/Pink accent for the rating */
+}
+
+.job-card a {
+  display: inline-block;
+  margin-top: 15px;
+  background: none;
+  border: 1px solid #3B82F6;
+  padding: 8px 18px;
+  color: #3B82F6;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.job-card a:hover {
+  background: #3B82F6;
+  color: white;
+}
